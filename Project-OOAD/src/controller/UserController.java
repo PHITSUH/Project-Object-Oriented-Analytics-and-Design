@@ -1,63 +1,81 @@
 package controller;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import model.User;
-import util.Connect;
+import view.AdminPage;
+import view.EventOrganizerPage;
+import view.GuestPage;
+import view.VendorPage;
 
 public class UserController {
 
-	private static Connect connect = Connect.getInstance();
-
 	public static ArrayList<User> userList = new ArrayList<>();
 
-	public static void getUser() {
-		String query = "SELECT * FROM users";
-		connect.rs = connect.execQuery(query);
-		try {
-			while (connect.rs.next()) {
-				String email = connect.rs.getString("UserEmail");
-				String username = connect.rs.getString("Username");
-				int id = Integer.parseInt(connect.rs.getString("UserId"));
-				String password = connect.rs.getString("UserPassword");
-				String role = connect.rs.getString("UserRole");
-				userList.add(new User(id, email, username, password, role));
+	public static void loginByRole(String email, Scene scene) {
+		userList = User.getUser();
+		User user = null;
+		for (User u : userList) {
+			if (u.getEmail().equals(email)) {
+				user = u;
+				break;
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		}
+		if (user.getRole().equals("Event Organizer")) {
+			new EventOrganizerPage(scene, user.getId()).show();
+			;
+		} else if (user.getRole().equals("Admin")) {
+			new AdminPage(scene, user.getId()).show();
+			;
+		} else if (user.getRole().equals("Guest")) {
+			new GuestPage(scene, user.getId()).show();
+			;
+		} else {
+			new VendorPage(scene, user.getId()).show();
+			;
+		}
+
 	}
 
-	public static void addUser(String email, String username, String password, String role) {
-		int id;
-		if (userList.isEmpty()) {
-			id = 1;
-		} else {
-			id = userList.get(userList.size() - 1).getId() + 1;
+	public static Alert validateLogin(String email, String password) {
+		Alert alert = new Alert(AlertType.ERROR);
+		userList = User.getUser();
+		if (email == null || email.isEmpty()) {
+			alert.setContentText("Email must be filled");
+			return alert;
 		}
-		String query = "INSERT INTO users VALUES(?, ?, ?, ?, ?)";
-		PreparedStatement ps = connect.addQuery(query);
-		try {
-			ps.setInt(1, id);
-			ps.setString(2, email);
-			ps.setString(3, username);
-			ps.setString(4, password);
-			ps.setString(5, role);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		if (password == null || password.isEmpty()) {
+			alert.setContentText("Password must be filled");
+			return alert;
 		}
-
+		int i = 0;
+		User user = null;
+		for (User u : userList) {
+			if (u.getEmail().equals(email)) {
+				i++;
+				if (!u.getPassword().equals(password)) {
+					alert.setContentText("Password is wrong");
+					return alert;
+				} else {
+					user = u;
+					break;
+				}
+			}
+		}
+		if (i == 0) {
+			alert.setContentText("Email is wrong");
+			return alert;
+		}
+		alert.setAlertType(AlertType.CONFIRMATION);
+		alert.setContentText("Welcome, " + user.getUsername());
+		return alert;
 	}
 
 	public static Alert validateRegister(String email, String username, String password, String role) {
-		getUser();
+		userList = User.getUser();
 		Alert alert = new Alert(AlertType.ERROR);
 		if (email == null || email.isEmpty()) {
 			alert.setContentText("Email must be filled");
@@ -90,10 +108,10 @@ public class UserController {
 			}
 		}
 
-		addUser(email, username, password, role);
+		User.addUser(email, username, password, role);
 
 		if (password.length() < 5) {
-			alert.setContentText("Password must at least be 5 letter long");
+			alert.setContentText("Password must at least be 5 letters long");
 			return alert;
 		}
 
