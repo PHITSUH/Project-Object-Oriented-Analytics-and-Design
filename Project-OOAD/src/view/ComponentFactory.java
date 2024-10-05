@@ -24,4 +24,24 @@ public class ComponentFactory {
 
 		return menuBar;
 	}
+
+	static MenuBar eventOrganizerNavbar(Scene scene, int id) {
+		MenuBar menuBar = new MenuBar();
+		Menu EOMenu = new Menu("Actions");
+		menuBar.getMenus().addAll(EOMenu);
+		MenuItem createEvent, viewEvent;
+		createEvent = new MenuItem("Create Event");
+		viewEvent = new MenuItem("View Event");
+		EOMenu.getItems().addAll(createEvent, viewEvent);
+
+		createEvent.setOnAction(e -> {
+			new CreateEventPage(scene, id).show();
+		});
+
+		viewEvent.setOnAction(e -> {
+			new ViewEventPage(scene, id).show();
+		});
+
+		return menuBar;
+	}
 }

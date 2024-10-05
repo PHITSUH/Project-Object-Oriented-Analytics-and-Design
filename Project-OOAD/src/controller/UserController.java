@@ -25,18 +25,25 @@ public class UserController {
 			}
 		}
 		if (user.getRole().equals("Event Organizer")) {
-			new EventOrganizerPage(scene, user.getId()).show();
-			;
+			new EventOrganizerPage(scene, user.getId());
 		} else if (user.getRole().equals("Admin")) {
-			new AdminPage(scene, user.getId()).show();
-			;
+			new AdminPage(scene, user.getId());
 		} else if (user.getRole().equals("Guest")) {
-			new GuestPage(scene, user.getId()).show();
-			;
+			new GuestPage(scene, user.getId());
 		} else {
-			new VendorPage(scene, user.getId()).show();
-			;
+			new VendorPage(scene, user.getId());
 		}
+
+	}
+
+	public static User getUserById(int id) {
+		userList = User.getUser();
+		for (int i = 0; i < userList.size(); i++) {
+			if (userList.get(i).getId() == id) {
+				return userList.get(i);
+			}
+		}
+		return null;
 
 	}
 
