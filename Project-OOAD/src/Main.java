@@ -18,5 +18,4 @@ public class Main extends Application {
 		new LoginPage(primaryStage.getScene()).show();
 		primaryStage.show();
 	}
-
 }

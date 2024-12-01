@@ -72,7 +72,11 @@ public class User {
 				int id = Integer.parseInt(connect.rs.getString("UserId"));
 				String password = connect.rs.getString("UserPassword");
 				String role = connect.rs.getString("UserRole");
-				userList.add(new User(id, email, username, password, role));
+				if (role.equals("Event Organizer")) {
+					userList.add(new EventOrganizer(id, email, username, password, role));
+				} else if (role.equals("Vendor"))
+					;
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -103,7 +107,6 @@ public class User {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 }

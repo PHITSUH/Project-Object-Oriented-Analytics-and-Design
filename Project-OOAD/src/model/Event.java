@@ -54,7 +54,7 @@ public class Event {
 			while (connect.rs.next()) {
 				int eventId = Integer.parseInt(connect.rs.getString("EventId"));
 				String eventName = connect.rs.getString("EventName");
-				String eventDate = connect.rs.getString("EventDate");
+				String eventDate = connect.rs.getString("Eventz`Date");
 				String eventLocation = connect.rs.getString("EventLocation");
 				String eventDescription = connect.rs.getString("EventDescription");
 				ArrayList<User> attendeeList = getAttendees(id);
