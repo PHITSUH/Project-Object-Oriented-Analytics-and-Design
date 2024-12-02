@@ -4,6 +4,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import model.User;
 
 public class ComponentFactory {
 	static MenuBar landingNavbar(Scene scene) {
@@ -25,7 +26,7 @@ public class ComponentFactory {
 		return menuBar;
 	}
 
-	static MenuBar eventOrganizerNavbar(Scene scene, int id) {
+	static MenuBar eventOrganizerNavbar(Scene scene, User currentUser) {
 		MenuBar menuBar = new MenuBar();
 		Menu EOMenu = new Menu("Actions");
 		menuBar.getMenus().addAll(EOMenu);
@@ -35,11 +36,11 @@ public class ComponentFactory {
 		EOMenu.getItems().addAll(createEvent, viewEvent);
 
 		createEvent.setOnAction(e -> {
-			new CreateEventPage(scene, id).show();
+			new CreateEventPage(scene, currentUser).show();
 		});
 
 		viewEvent.setOnAction(e -> {
-			new ViewEventPage(scene, id).show();
+			new ViewEventPage(scene, currentUser).show();
 		});
 
 		return menuBar;

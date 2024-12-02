@@ -23,11 +23,11 @@ public class LoginPage extends Page {
 		super(scene);
 	}
 
-	BorderPane mainPane;
-	TextField emailField, passwordField;
-	Label emailLabel, passwordLabel, loginLabel, storeLabel;
-	VBox mainBox, emailBox, passwordBox;
-	Button submitButton;
+	private BorderPane mainPane;
+	private TextField emailField, passwordField;
+	private Label emailLabel, passwordLabel, loginLabel, storeLabel;
+	private VBox mainBox, emailBox, passwordBox;
+	private Button submitButton;
 
 	public void event() {
 		submitButton.setOnMouseClicked(e -> {
@@ -63,12 +63,13 @@ public class LoginPage extends Page {
 		emailBox = new VBox();
 		emailBox.getChildren().addAll(emailLabel, emailField);
 		emailBox.setAlignment(Pos.CENTER);
-		emailBox.setMargin(emailLabel, new Insets(30, 171, 0, 0));
+		VBox.setMargin(emailLabel, new Insets(30, 171, 0, 0));
+
 		passwordBox = new VBox();
 		passwordBox.getChildren().addAll(passwordLabel, passwordField);
 		passwordBox.setAlignment(Pos.CENTER);
-		passwordBox.setMargin(passwordLabel, new Insets(10, 150, 0, 0));
-		passwordBox.setMargin(passwordField, new Insets(0, 0, 30, 0));
+		VBox.setMargin(passwordLabel, new Insets(10, 150, 0, 0));
+		VBox.setMargin(passwordField, new Insets(0, 0, 30, 0));
 
 		submitButton = new Button("Login");
 

@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class Connect {
-
 	private final String USERNAME = "root";
 	private final String PASSWORD = "";
 	private final String HOST = "localhost:3306";
@@ -36,7 +35,6 @@ public class Connect {
 			con = DriverManager.getConnection(CONNECTION, USERNAME, PASSWORD);
 			st = con.createStatement();
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

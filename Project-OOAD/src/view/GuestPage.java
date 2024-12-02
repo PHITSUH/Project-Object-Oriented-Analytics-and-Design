@@ -9,12 +9,10 @@ public class GuestPage extends Page {
 	public GuestPage(Scene scene, int id) {
 		super(scene);
 		this.id = id;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	Pane initRoot() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 

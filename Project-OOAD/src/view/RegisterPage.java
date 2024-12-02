@@ -16,32 +16,35 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import model.User;
+import util.Result;
 
 public class RegisterPage extends Page {
 	public RegisterPage(Scene scene) {
 		super(scene);
 	}
 
-	Alert alert;
-	BorderPane mainPane;
-	Label registerLabel, storeLabel, emailLabel, usernameLabel, passwordLabel, roleLabel;
-	VBox mainBox, emailBox, usernameBox, passwordBox, roleBox;
-	TextField usernameField, emailField;
-	PasswordField passwordField;
-	ComboBox<String> roleComboBox;
-	Button submitButton;
+	private BorderPane mainPane;
+	private Label registerLabel, storeLabel, emailLabel, usernameLabel, passwordLabel, roleLabel;
+	private VBox mainBox, emailBox, usernameBox, passwordBox, roleBox;
+	private TextField usernameField, emailField;
+	private PasswordField passwordField;
+	private ComboBox<String> roleComboBox;
+	private Button submitButton;
 
 	public void event() {
 		submitButton.setOnMouseClicked(e -> {
-			alert = UserController.validateRegister(emailField.getText(), usernameField.getText(),
+			Result<Void, String> result = UserController.register(emailField.getText(), usernameField.getText(),
 					passwordField.getText(), roleComboBox.getValue());
-			alert.showAndWait().ifPresent(response -> {
-				if (alert.getAlertType().equals(AlertType.CONFIRMATION)) {
-					new LoginPage(scene).show();
-				}
-			});
-		});
 
+			if (result.isErr()) {
+				Alert alert = new Alert(AlertType.ERROR, result.getError());
+				alert.show();
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION, "Account successfully created");
+				alert.show();
+			}
+		});
 	}
 
 	public Pane init() {
@@ -63,33 +66,41 @@ public class RegisterPage extends Page {
 		usernameField = new TextField();
 		usernameField.setPromptText("Username");
 		usernameField.setMaxWidth(200);
+
 		emailField = new TextField();
 		emailField.setPromptText("Email");
 		emailField.setMaxWidth(200);
+
 		passwordField = new PasswordField();
 		passwordField.setPromptText("Password");
 		passwordField.setMaxWidth(200);
+
 		roleComboBox = new ComboBox<>();
-		roleComboBox.getItems().addAll("Event Organizer", "Vendor", "Guest");
+		roleComboBox.getItems().addAll(User.GUEST_ROLE, User.EVENT_ORGANIZER_ROLE, User.VENDOR_ROLE);
 		roleComboBox.setPrefWidth(200);
+		// kasih default value guest agar inputnya tidak bisa kosong
+		roleComboBox.getSelectionModel().select(0);
 
 		emailBox = new VBox();
 		emailBox.getChildren().addAll(emailLabel, emailField);
 		emailBox.setAlignment(Pos.CENTER);
-		emailBox.setMargin(emailLabel, new Insets(10, 171, 0, 0));
+		VBox.setMargin(emailLabel, new Insets(10, 171, 0, 0));
+
 		usernameBox = new VBox();
 		usernameBox.getChildren().addAll(usernameLabel, usernameField);
 		usernameBox.setAlignment(Pos.CENTER);
-		usernameBox.setMargin(usernameLabel, new Insets(10, 148, 0, 0));
+		VBox.setMargin(usernameLabel, new Insets(10, 148, 0, 0));
+
 		passwordBox = new VBox();
 		passwordBox.getChildren().addAll(passwordLabel, passwordField);
 		passwordBox.setAlignment(Pos.CENTER);
-		passwordBox.setMargin(passwordLabel, new Insets(10, 150, 0, 0));
+		VBox.setMargin(passwordLabel, new Insets(10, 150, 0, 0));
+
 		roleBox = new VBox();
 		roleBox.getChildren().addAll(roleLabel, roleComboBox);
 		roleBox.setAlignment(Pos.CENTER);
-		roleBox.setMargin(roleLabel, new Insets(10, 175, 0, 0));
-		roleBox.setMargin(roleComboBox, new Insets(0, 0, 50, 0));
+		VBox.setMargin(roleLabel, new Insets(10, 175, 0, 0));
+		VBox.setMargin(roleComboBox, new Insets(0, 0, 50, 0));
 
 		submitButton = new Button("Register");
 
@@ -98,7 +109,6 @@ public class RegisterPage extends Page {
 				submitButton);
 
 		event();
-
 		return mainPane;
 	}
 

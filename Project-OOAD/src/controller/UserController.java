@@ -3,9 +3,8 @@ package controller;
 import java.util.ArrayList;
 
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import model.User;
+import util.Result;
 import view.AdminPage;
 import view.EventOrganizerPage;
 import view.GuestPage;
@@ -47,85 +46,50 @@ public class UserController {
 
 	}
 
-	public static Alert validateLogin(String email, String password) {
-		Alert alert = new Alert(AlertType.ERROR);
-		userList = User.getUser();
-		if (email == null || email.isEmpty()) {
-			alert.setContentText("Email must be filled");
-			return alert;
-		}
-		if (password == null || password.isEmpty()) {
-			alert.setContentText("Password must be filled");
-			return alert;
-		}
-		int i = 0;
-		User user = null;
-		for (User u : userList) {
-			if (u.getEmail().equals(email)) {
-				i++;
-				if (!u.getPassword().equals(password)) {
-					alert.setContentText("Password is wrong");
-					return alert;
-				} else {
-					user = u;
-					break;
-				}
-			}
-		}
-		if (i == 0) {
-			alert.setContentText("Email is wrong");
-			return alert;
-		}
-		alert.setAlertType(AlertType.CONFIRMATION);
-		alert.setContentText("Welcome, " + user.getUsername());
-		return alert;
+	public static Result<Void, String> validateLogin(String email, String password) {
+
 	}
 
-	public static Alert validateRegister(String email, String username, String password, String role) {
-		userList = User.getUser();
-		Alert alert = new Alert(AlertType.ERROR);
-		if (email == null || email.isEmpty()) {
-			alert.setContentText("Email must be filled");
-			return alert;
+	private static Result<Void, String> checkRegisterInput(String email, String name, String password) {
+		// isBlank lebih bagus daripada isEmpty
+		// karena isBlank juga ngecek apakah inputnya hanya spasi doang
+		if (email == null || email.isBlank()) {
+			return Result.err("Email must be filled");
 		}
 
-		if (username == null || username.isEmpty()) {
-			alert.setContentText("Username must be filled");
-			return alert;
+		if (name == null || name.isBlank()) {
+			return Result.err("Username must be filled");
 		}
 
-		if (password == null || password.isEmpty()) {
-			alert.setContentText("Password must be filled");
-			return alert;
+		if (password == null || password.isBlank()) {
+			return Result.err("Password must be filled");
 		}
-
-		if (role == null || role.isEmpty()) {
-			alert.setContentText("Must choose a role");
-			return alert;
-		}
-
-		for (User u : userList) {
-			if (u.getUsername() == username) {
-				alert.setContentText("Username must be unique");
-				return alert;
-			}
-			if (u.getEmail() == email) {
-				alert.setContentText("Email must be unique");
-				return alert;
-			}
-		}
-
-		User.addUser(email, username, password, role);
 
 		if (password.length() < 5) {
-			alert.setContentText("Password must at least be 5 letters long");
-			return alert;
+			return Result.err("Password must at least be 5 letters long");
+		}
+		return Result.ok(null);
+	}
+
+	public static Result<Void, String> register(String email, String name, String password, String role) {
+		User userByEmail = User.getUserByEmail(email).orElse(null);
+		User userByName = User.getUserByName(name).orElse(null);
+
+		if (userByEmail != null) {
+			return Result.err("Email must be unique");
+		}
+		if (userByName != null) {
+			return Result.err("Name must be unique");
 		}
 
-		alert.setAlertType(AlertType.CONFIRMATION);
-		alert.setContentText("Account has been successfully created!");
+		Result<Void, String> validation = checkRegisterInput(email, name, password);
 
-		return alert;
+		if (!validation.isOk()) {
+			return validation;
+		}
+
+		User.register(email, name, password, role);
+		return Result.ok(null);
 	}
 
 }

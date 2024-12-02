@@ -13,33 +13,32 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import model.Event;
+import model.User;
 
 public class ViewEventPage extends Page {
-	int id;
-	BorderPane mainPane;
-	TableView<Event> tableView;
-	ArrayList<Event> eventList;
-	Label viewLabel, emptyTableLabel;
-	VBox mainBox;
+	private BorderPane mainPane;
+	private TableView<Event> tableView;
+	private ArrayList<Event> eventList;
+	private Label viewLabel, emptyTableLabel;
+	private VBox mainBox;
 
-	public ViewEventPage(Scene scene, int id) {
-		super(scene);
-		this.id = id;
-		// TODO Auto-generated constructor stub
+	public ViewEventPage(Scene scene, User currentUser) {
+		super(scene, currentUser);
 	}
 
 	public Pane init() {
 		mainPane = new BorderPane();
-		mainPane.setTop(ComponentFactory.eventOrganizerNavbar(scene, id));
-		eventList = Event.getEventByUserId(id);
+		mainPane.setTop(ComponentFactory.eventOrganizerNavbar(scene, getCurrentUser()));
+		eventList = Event.getEventByUserId(getCurrentUser().getId());
 		viewLabel = new Label("Events");
 		viewLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));
 		mainBox = new VBox();
 		mainBox.getChildren().add(viewLabel);
 		mainBox.setAlignment(Pos.CENTER);
 
-		tableView = EventController.createTableView(eventList);
-		if (tableView == null) {
+		// if there is no event, don't show a table
+		// show a label saying "no events"
+		if (tableView == ) {
 			emptyTableLabel = new Label("You don't have any event yet, create an event now.");
 			mainBox.getChildren().add(emptyTableLabel);
 		} else {

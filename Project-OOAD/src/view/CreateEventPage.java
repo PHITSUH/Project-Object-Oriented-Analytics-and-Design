@@ -12,21 +12,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import model.User;
 
-public class CreateEventPage extends Page {
-	int id;
-	BorderPane mainPane;
-	TextField nameField, locationField, descField;
-	DatePicker datePicker;
-	Label nameLabel, dateLabel, locationLabel, descLabel, createLabel;
-	VBox mainBox, nameBox, dateBox, locationBox, descBox;
-	Button submitButton;
-
-	public CreateEventPage(Scene scene, int id) {
-		super(scene);
-		this.id = id;
-		// TODO Auto-generated constructor stub
+public class CreateEventPage extends AuthenticatedPage {
+	public CreateEventPage(Scene scene, User currentUser) {
+		super(scene, currentUser);
 	}
+
+	private BorderPane mainPane;
+	private TextField nameField, locationField, descField;
+	private DatePicker datePicker;
+	private Label nameLabel, dateLabel, locationLabel, descLabel, createLabel;
+	private VBox mainBox, nameBox, dateBox, locationBox, descBox;
+	private Button submitButton;
 
 	public Pane init() {
 		mainPane = new BorderPane();
@@ -57,22 +55,22 @@ public class CreateEventPage extends Page {
 		nameBox = new VBox();
 		nameBox.getChildren().addAll(nameLabel, nameField);
 		nameBox.setAlignment(Pos.CENTER);
-		nameBox.setMargin(nameField, new Insets(0, 0, 20, 0));
+		VBox.setMargin(nameField, new Insets(0, 0, 20, 0));
 
 		dateBox = new VBox();
 		dateBox.getChildren().addAll(dateLabel, datePicker);
 		dateBox.setAlignment(Pos.CENTER);
-		dateBox.setMargin(datePicker, new Insets(0, 0, 20, 0));
+		VBox.setMargin(datePicker, new Insets(0, 0, 20, 0));
 
 		locationBox = new VBox();
 		locationBox.getChildren().addAll(locationLabel, locationField);
 		locationBox.setAlignment(Pos.CENTER);
-		locationBox.setMargin(locationField, new Insets(0, 0, 20, 0));
+		VBox.setMargin(locationField, new Insets(0, 0, 20, 0));
 
 		descBox = new VBox();
 		descBox.getChildren().addAll(descLabel, descField);
 		descBox.setAlignment(Pos.CENTER);
-		descBox.setMargin(descField, new Insets(0, 0, 20, 0));
+		VBox.setMargin(descField, new Insets(0, 0, 20, 0));
 
 		submitButton = new Button("Submit");
 
@@ -86,7 +84,6 @@ public class CreateEventPage extends Page {
 
 	@Override
 	Pane initRoot() {
-		// TODO Auto-generated method stub
 		Pane root = init();
 		return root;
 	}

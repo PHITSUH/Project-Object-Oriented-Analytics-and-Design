@@ -4,12 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class AdminPage extends Page {
-	int id;
 
-	public AdminPage(Scene scene, int id) {
+	public AdminPage(Scene scene) {
 		super(scene);
-		this.id = id;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

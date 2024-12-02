@@ -13,6 +13,7 @@ public class EventController {
 
 	public static TableView<Event> createTableView(ArrayList<Event> eventList) {
 		TableView<Event> tableView = new TableView<>();
+
 		if (eventList.isEmpty()) {
 			return null;
 		} else {
@@ -30,7 +31,10 @@ public class EventController {
 			TableColumn<Event, String> eventLocationColumn = new TableColumn<>("Event Location");
 			eventLocationColumn.setCellValueFactory(new PropertyValueFactory<>("EventLocation"));
 
-			tableView.getColumns().addAll(eventIdColumn, eventNameColumn, eventDateColumn, eventLocationColumn);
+			tableView.getColumns().add(eventIdColumn);
+			tableView.getColumns().add(eventNameColumn);
+			tableView.getColumns().add(eventDateColumn);
+			tableView.getColumns().add(eventLocationColumn);
 
 			ObservableList<Event> eventObsList = FXCollections.observableArrayList(eventList);
 

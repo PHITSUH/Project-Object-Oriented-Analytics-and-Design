@@ -7,9 +7,9 @@ import controller.UserController;
 import util.Connect;
 
 public class Event {
-	int eventId;
-	String eventName, eventDate, eventLocation, eventDescription;
-	ArrayList<User> attendees;
+	private int eventId;
+	private String eventName, eventDate, eventLocation, eventDescription;
+	private ArrayList<User> attendees;
 	private static Connect connect = Connect.getInstance();
 
 	public Event(int eventId, String eventName, String eventDate, String eventLocation, String eventDescription,
