@@ -1,9 +1,12 @@
 package main;
+
+import controller.Controller;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import view.LoginPage;
+import view.Page;
 
 public class Main extends Application {
 
@@ -14,9 +17,12 @@ public class Main extends Application {
 
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		// TODO Auto-generated method stub
-		primaryStage.setScene(new Scene(new Pane(), 800, 500));
-		new LoginPage(primaryStage.getScene()).show();
+		Scene primaryScene = new Scene(new Pane(), 800, 500);
+		Controller.initialize(primaryStage.getScene());
+		Page<Void> page = new LoginPage();
+		page.show(primaryScene);
+
+		primaryStage.setScene(primaryScene);
 		primaryStage.show();
 	}
 }

@@ -2,15 +2,49 @@ package controller;
 
 import java.util.ArrayList;
 
+import model.Admin;
+import model.EventOrganizer;
 import model.User;
+import model.Vendor;
 import util.Result;
+import view.AdminPage;
+import view.GuestPage;
+import view.LoginPage;
+import view.RegisterPage;
+import view.VendorPage;
+import view.ViewEventPage;
 
-public class UserController {
+public class UserController extends Controller {
 
 	public static ArrayList<User> userList = new ArrayList<>();
 
+	public static void viewLoginPage() {
+		navigate(new LoginPage());
+	}
+
+	public static void viewRegisterPage() {
+		navigate(new RegisterPage());
+	}
+
 	public static Result<User, String> login(String email, String password) {
-		return User.login(email, password);
+		// show the correct page for each role
+		Result<User, String> user = User.login(email, password);
+
+		if (user.isErr()) {
+			return user;
+		}
+		User u = user.getValue();
+		if (u instanceof Admin) {
+			navigate(new AdminPage());
+		} else if (u instanceof Vendor) {
+			navigate(new VendorPage());
+		} else if (u instanceof EventOrganizer) {
+			navigate(new ViewEventPage());
+		} else {
+			navigate(new GuestPage());
+		}
+
+		return user;
 	}
 
 	private static Result<Void, String> checkRegisterInput(String email, String name, String password) {
@@ -54,6 +88,8 @@ public class UserController {
 		}
 		// if validation succeeds insert the user to the database
 		User.register(email, name, password, role);
+		// redirect to login page
+		viewLoginPage();
 		return Result.ok(null);
 	}
 

@@ -3,7 +3,6 @@ package view;
 import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -19,10 +18,7 @@ import javafx.scene.text.FontWeight;
 import model.User;
 import util.Result;
 
-public class RegisterPage extends Page {
-	public RegisterPage(Scene scene) {
-		super(scene);
-	}
+public class RegisterPage extends Page<Void> {
 
 	private BorderPane mainPane;
 	private Label registerLabel, storeLabel, emailLabel, usernameLabel, passwordLabel, roleLabel;
@@ -45,8 +41,6 @@ public class RegisterPage extends Page {
 
 			Alert alert = new Alert(AlertType.INFORMATION, "Account successfully created");
 			alert.show();
-			// redirect to login
-			new LoginPage(scene).show();
 		});
 	}
 
@@ -59,7 +53,7 @@ public class RegisterPage extends Page {
 		registerLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));
 		mainPane.setCenter(mainBox);
 
-		mainPane.setTop(ComponentFactory.landingNavbar(scene));
+		mainPane.setTop(ComponentFactory.landingNavbar());
 
 		usernameLabel = new Label("Username");
 		emailLabel = new Label("Email");

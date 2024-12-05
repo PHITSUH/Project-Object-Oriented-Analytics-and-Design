@@ -2,7 +2,6 @@ package view;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -13,11 +12,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 
-public class CreateEventPage extends Page {
-	public CreateEventPage(Scene scene) {
-		super(scene);
-	}
-
+public class CreateEventPage extends Page<Void> {
 	private BorderPane mainPane;
 	private TextField nameField, locationField, descField;
 	private DatePicker datePicker;
@@ -27,7 +22,7 @@ public class CreateEventPage extends Page {
 
 	public Pane init() {
 		mainPane = new BorderPane();
-		mainPane.setTop(ComponentFactory.eventOrganizerNavbar(scene));
+		mainPane.setTop(ComponentFactory.eventOrganizerNavbar());
 
 		createLabel = new Label("Create Event");
 		createLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));

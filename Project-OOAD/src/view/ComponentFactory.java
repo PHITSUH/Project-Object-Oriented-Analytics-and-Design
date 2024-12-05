@@ -1,12 +1,13 @@
 package view;
 
-import javafx.scene.Scene;
+import controller.EventOrganizerController;
+import controller.UserController;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 
 public class ComponentFactory {
-	static MenuBar landingNavbar(Scene scene) {
+	static MenuBar landingNavbar() {
 		MenuBar menuBar = new MenuBar();
 		Menu loginMenu = new Menu("Actions");
 		menuBar.getMenus().addAll(loginMenu);
@@ -15,17 +16,17 @@ public class ComponentFactory {
 		loginMenu.getItems().addAll(loginItem, registerItem);
 
 		loginItem.setOnAction(e -> {
-			new LoginPage(scene).show();
+			UserController.viewLoginPage();
 		});
 
 		registerItem.setOnAction(e -> {
-			new RegisterPage(scene).show();
+			UserController.viewRegisterPage();
 		});
 
 		return menuBar;
 	}
 
-	static MenuBar eventOrganizerNavbar(Scene scene) {
+	static MenuBar eventOrganizerNavbar() {
 		MenuBar menuBar = new MenuBar();
 		Menu EOMenu = new Menu("Actions");
 		menuBar.getMenus().addAll(EOMenu);
@@ -35,11 +36,11 @@ public class ComponentFactory {
 		EOMenu.getItems().addAll(createEvent, viewEvent);
 
 		createEvent.setOnAction(e -> {
-			new CreateEventPage(scene).show();
+			EventOrganizerController.viewCreateEventPage();
 		});
 
 		viewEvent.setOnAction(e -> {
-			new ViewEventPage(scene).show();
+			EventOrganizerController.viewViewEventPage();
 		});
 
 		return menuBar;

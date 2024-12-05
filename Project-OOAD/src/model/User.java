@@ -6,10 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import util.Connect;
 import util.Result;
 
-public abstract class User {
+public abstract class User extends Model {
 	// class diagram suruh ID -> String
 	private String id;
 	private String email;
@@ -17,7 +16,6 @@ public abstract class User {
 	private String password;
 	private String role;
 
-	private static Connect connect = Connect.getInstance();
 	private static User currentUser = null;
 
 	public static final String GUEST_ROLE = "Guest";

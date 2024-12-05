@@ -4,13 +4,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import util.Connect;
-
-public class Event {
+public class Event extends Model {
 	private String id;
 	private String name, date, location, description;
 	private String organizerId;
-	private static Connect connect = Connect.getInstance();
 
 	public Event(String id, String name, String date, String location, String description, String organizerId) {
 		super();
@@ -43,17 +40,22 @@ public class Event {
 		}
 	}
 
+	public static Event getEvents() {
+		String query = "SELECT * FROM events;";
+
+	}
+
 	private static String generateNewId() {
 		String query = "SELECT MAX(id) AS maxId FROM events";
 		PreparedStatement ps = null;
 		int maxId = 0;
 
+		// take the biggest ID
 		try {
 			ps = connect.addQuery(query);
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				// Retrieve max ID and increment it
 				String maxIdStr = rs.getString("maxId");
 				if (maxIdStr != null) {
 					maxId = Integer.parseInt(maxIdStr);
@@ -63,7 +65,7 @@ public class Event {
 			e.printStackTrace();
 		}
 
-		// Increment and format the new ID
+		// increment and format the new ID
 		maxId += 1;
 		return String.format("%05d", maxId);
 	}

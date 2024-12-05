@@ -3,7 +3,6 @@ package view;
 import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -16,17 +15,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import model.Admin;
-import model.EventOrganizer;
 import model.User;
-import model.Vendor;
 import util.Result;
 
-public class LoginPage extends Page {
-
-	public LoginPage(Scene scene) {
-		super(scene);
-	}
+public class LoginPage extends Page<Void> {
 
 	private BorderPane mainPane;
 	private TextField emailField, passwordField;
@@ -43,26 +35,12 @@ public class LoginPage extends Page {
 				alert.show();
 				return;
 			}
-
-			// show the correct page for each role
-			User user = result.getValue();
-			Page page;
-			if (user instanceof Admin) {
-				page = new AdminPage(scene);
-			} else if (user instanceof Vendor) {
-				page = new VendorPage(scene);
-			} else if (user instanceof EventOrganizer) {
-				page = new EventOrganizerPage(scene);
-			} else {
-				page = new GuestPage(scene);
-			}
-			page.show();
 		});
 	}
 
 	public Pane init() {
 		mainPane = new BorderPane();
-		MenuBar navigationBar = ComponentFactory.landingNavbar(scene);
+		MenuBar navigationBar = ComponentFactory.landingNavbar();
 		mainPane.setTop(navigationBar);
 
 		loginLabel = new Label("Login");

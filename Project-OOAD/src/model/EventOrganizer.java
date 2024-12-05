@@ -28,11 +28,9 @@ public class EventOrganizer extends User {
 				eventList.add(new Event(eventId, eventName, eventDate, eventLocation, eventDescription, organizerId));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return eventList;
-
 	}
 
 }

@@ -1,12 +1,10 @@
 package view;
 
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-public class AdminPage extends Page {
+public class AdminPage extends Page<Void> {
 
-	public AdminPage(Scene scene) {
-		super(scene);
+	public AdminPage() {
 	}
 
 	@Override

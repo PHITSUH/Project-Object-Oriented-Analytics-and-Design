@@ -1,13 +1,8 @@
 package view;
 
-import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
-public class VendorPage extends Page {
-
-	public VendorPage(Scene scene) {
-		super(scene);
-	}
+public class VendorPage extends Page<Void> {
 
 	@Override
 	Pane initRoot() {
