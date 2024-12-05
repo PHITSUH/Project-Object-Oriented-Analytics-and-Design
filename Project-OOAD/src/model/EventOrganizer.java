@@ -20,11 +20,18 @@ public class EventOrganizer extends User {
 		try {
 			while (connect.rs.next()) {
 				String eventId = connect.rs.getString("EventId");
+				String eventName = connect.rs.getString("EventName");
+				String eventDate = connect.rs.getString("EventDate");
+				String eventLocation = connect.rs.getString("EventLocation");
+				String eventDescription = connect.rs.getString("EventDescription");
+				String organizerId = connect.rs.getString("OrganizerId");
+				eventList.add(new Event(eventId, eventName, eventDate, eventLocation, eventDescription, organizerId));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		return eventList;
 
 	}
 

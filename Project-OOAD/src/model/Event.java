@@ -12,7 +12,7 @@ public class Event {
 	private String organizerId;
 	private static Connect connect = Connect.getInstance();
 
-	private Event(String id, String name, String date, String location, String description, String organizerId) {
+	public Event(String id, String name, String date, String location, String description, String organizerId) {
 		super();
 		this.id = id;
 		this.name = name;
