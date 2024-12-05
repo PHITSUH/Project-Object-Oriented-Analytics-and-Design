@@ -45,11 +45,11 @@ public abstract class User {
 		userList = new ArrayList<>();
 		try {
 			while (connect.rs.next()) {
-				String email = connect.rs.getString("Email");
-				String username = connect.rs.getString("Name");
-				String id = connect.rs.getString("Id");
-				String password = connect.rs.getString("Password");
-				String role = connect.rs.getString("Role");
+				String email = connect.rs.getString("UserEmail");
+				String username = connect.rs.getString("UserName");
+				String id = connect.rs.getString("UserId");
+				String password = connect.rs.getString("UserPassword");
+				String role = connect.rs.getString("UserRole");
 
 				if (role.equals(EVENT_ORGANIZER_ROLE)) {
 					userList.add(new EventOrganizer(id, email, username, password, role));

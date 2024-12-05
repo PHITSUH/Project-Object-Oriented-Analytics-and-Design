@@ -28,7 +28,7 @@ public class ViewEventPage extends Page {
 
 	public Pane init() {
 		mainPane = new BorderPane();
-		mainPane.setTop(ComponentFactory.eventOrganizerNavbar(scene, getCurrentUser()));
+		mainPane.setTop(ComponentFactory.eventOrganizerNavbar(scene));
 		eventList = Event.getEventByUserId(getCurrentUser().getId());
 		viewLabel = new Label("Events");
 		viewLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));

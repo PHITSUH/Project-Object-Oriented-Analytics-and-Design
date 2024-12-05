@@ -22,8 +22,6 @@ public class Event {
 		this.organizerId = organizerId;
 	}
 
-	public
-
 	public static Event createEvent(String name, String date, String location, String description, String organizerId) {
 		String query = "INSERT INTO events (id, name, date, location, description, organizer_id) VALUES (?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = connect.addQuery(query);
