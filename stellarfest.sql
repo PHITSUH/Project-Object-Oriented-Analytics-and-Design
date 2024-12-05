@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 01, 2024 at 02:43 PM
+-- Generation Time: Dec 05, 2024 at 04:46 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -24,72 +24,47 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `events`
+-- Table structure for table `event`
 --
 
-CREATE TABLE `events` (
-  `EventId` int(11) NOT NULL,
-  `UserId` int(11) NOT NULL,
+CREATE TABLE `event` (
+  `EventId` varchar(255) NOT NULL,
   `EventName` varchar(255) NOT NULL,
   `EventDate` date NOT NULL,
   `EventLocation` varchar(255) NOT NULL,
-  `EventDescription` varchar(255) NOT NULL
+  `EventDescription` varchar(255) NOT NULL,
+  `OrganizerId` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `event_attendees`
+-- Table structure for table `user`
 --
 
-CREATE TABLE `event_attendees` (
-  `EventId` int(11) NOT NULL,
-  `UserId` int(11) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `users`
---
-
-CREATE TABLE `users` (
-  `UserId` int(11) NOT NULL,
+CREATE TABLE `user` (
+  `UserId` varchar(255) NOT NULL,
   `UserEmail` varchar(255) NOT NULL,
-  `Username` varchar(255) NOT NULL,
+  `UserName` varchar(255) NOT NULL,
   `UserPassword` varchar(255) NOT NULL,
   `UserRole` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `users`
---
-
-INSERT INTO `users` (`UserId`, `UserEmail`, `Username`, `UserPassword`, `UserRole`) VALUES
-(1, 'joelnathan@gmail.com', 'Joel', 'joel123', 'Event Organizer');
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `events`
+-- Indexes for table `event`
 --
-ALTER TABLE `events`
-  ADD PRIMARY KEY (`EventId`,`UserId`),
-  ADD KEY `userId` (`UserId`);
-
---
--- Indexes for table `event_attendees`
---
-ALTER TABLE `event_attendees`
+ALTER TABLE `event`
   ADD PRIMARY KEY (`EventId`),
-  ADD KEY `userId` (`UserId`);
+  ADD KEY `OrganizerId` (`OrganizerId`);
 
 --
--- Indexes for table `users`
+-- Indexes for table `user`
 --
-ALTER TABLE `users`
+ALTER TABLE `user`
   ADD PRIMARY KEY (`UserId`);
 
 --
@@ -97,16 +72,10 @@ ALTER TABLE `users`
 --
 
 --
--- Constraints for table `events`
+-- Constraints for table `event`
 --
-ALTER TABLE `events`
-  ADD CONSTRAINT `events_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`UserId`);
-
---
--- Constraints for table `event_attendees`
---
-ALTER TABLE `event_attendees`
-  ADD CONSTRAINT `event_attendees_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`UserId`);
+ALTER TABLE `event`
+  ADD CONSTRAINT `event_ibfk_1` FOREIGN KEY (`OrganizerId`) REFERENCES `user` (`UserId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
