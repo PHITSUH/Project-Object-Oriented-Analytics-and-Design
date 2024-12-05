@@ -1,15 +1,18 @@
 package view;
 
 import javafx.scene.Scene;
-import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 
-public class EventOrganizerPage {
-	int id;
-	private BorderPane mainPane;
+public class EventOrganizerPage extends Page {
 
-	public EventOrganizerPage(Scene scene, int id) {
-		new ViewEventPage(scene, id).show();
+	public EventOrganizerPage(Scene scene) {
+		super(scene);
+	}
 
+	@Override
+	Pane initRoot() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

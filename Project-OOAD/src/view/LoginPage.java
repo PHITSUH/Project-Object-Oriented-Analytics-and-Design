@@ -16,6 +16,11 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import model.Admin;
+import model.EventOrganizer;
+import model.User;
+import model.Vendor;
+import util.Result;
 
 public class LoginPage extends Page {
 
@@ -31,12 +36,27 @@ public class LoginPage extends Page {
 
 	public void event() {
 		submitButton.setOnMouseClicked(e -> {
-			Alert alert = UserController.validateLogin(emailField.getText(), passwordField.getText());
-			alert.showAndWait().ifPresent(response -> {
-				if (alert.getAlertType().equals(AlertType.CONFIRMATION)) {
-					UserController.loginByRole(emailField.getText(), scene);
-				}
-			});
+			Result<User, String> result = UserController.login(emailField.getText(), passwordField.getText());
+
+			if (result.isErr()) {
+				Alert alert = new Alert(AlertType.ERROR, result.getError());
+				alert.show();
+				return;
+			}
+
+			// show the correct page for each role
+			User user = result.getValue();
+			Page page;
+			if (user instanceof Admin) {
+				page = new AdminPage(scene);
+			} else if (user instanceof Vendor) {
+				page = new VendorPage(scene);
+			} else if (user instanceof EventOrganizer) {
+				page = new EventOrganizerPage(scene);
+			} else {
+				page = new GuestPage(scene);
+			}
+			page.show();
 		});
 	}
 
@@ -46,9 +66,10 @@ public class LoginPage extends Page {
 		mainPane.setTop(navigationBar);
 
 		loginLabel = new Label("Login");
+		loginLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));
+
 		storeLabel = new Label("StellarFest");
 		storeLabel.setFont(Font.font(20));
-		loginLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));
 
 		emailLabel = new Label("Email");
 		passwordLabel = new Label("Password");
@@ -56,6 +77,7 @@ public class LoginPage extends Page {
 		emailField = new TextField();
 		emailField.setPromptText("Email");
 		emailField.setMaxWidth(200);
+
 		passwordField = new PasswordField();
 		passwordField.setPromptText("Password");
 		passwordField.setMaxWidth(200);

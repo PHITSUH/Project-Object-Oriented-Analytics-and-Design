@@ -36,11 +36,11 @@ public class ComponentFactory {
 		EOMenu.getItems().addAll(createEvent, viewEvent);
 
 		createEvent.setOnAction(e -> {
-			new CreateEventPage(scene, currentUser).show();
+			new CreateEventPage(scene).show();
 		});
 
 		viewEvent.setOnAction(e -> {
-			new ViewEventPage(scene, currentUser).show();
+			new ViewEventPage(scene).show();
 		});
 
 		return menuBar;

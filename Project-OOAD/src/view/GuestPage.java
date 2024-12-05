@@ -4,11 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class GuestPage extends Page {
-	int id;
 
-	public GuestPage(Scene scene, int id) {
+	public GuestPage(Scene scene) {
 		super(scene);
-		this.id = id;
 	}
 
 	@Override

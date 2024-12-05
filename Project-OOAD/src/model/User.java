@@ -16,6 +16,7 @@ public abstract class User {
 	private String name;
 	private String password;
 	private String role;
+
 	private static Connect connect = Connect.getInstance();
 	private static User currentUser = null;
 
@@ -24,7 +25,7 @@ public abstract class User {
 	public static final String ADMIN_ROLE = "Admin";
 	public static final String EVENT_ORGANIZER_ROLE = "Event Organizer";
 
-	public User(String id, String email, String name, String password, String role) {
+	protected User(String id, String email, String name, String password, String role) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -49,14 +50,15 @@ public abstract class User {
 				String id = connect.rs.getString("Id");
 				String password = connect.rs.getString("Password");
 				String role = connect.rs.getString("Role");
+
 				if (role.equals(EVENT_ORGANIZER_ROLE)) {
 					userList.add(new EventOrganizer(id, email, username, password, role));
 				} else if (role.equals(VENDOR_ROLE)) {
-					userList.add(null);
+					userList.add(new Vendor(id, email, username, password, role));
 				} else if (role.equals(ADMIN_ROLE)) {
-
+					userList.add(new Admin(id, email, username, password, role));
 				} else {
-
+					userList.add(new Guest(id, email, username, password, role));
 				}
 			}
 		} catch (SQLException e) {
@@ -99,6 +101,7 @@ public abstract class User {
 		if (user == null) {
 			return Result.err("Invalid credentials!");
 		}
+		currentUser = user;
 		return Result.ok(user);
 	}
 

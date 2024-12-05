@@ -40,10 +40,13 @@ public class RegisterPage extends Page {
 			if (result.isErr()) {
 				Alert alert = new Alert(AlertType.ERROR, result.getError());
 				alert.show();
-			} else {
-				Alert alert = new Alert(AlertType.INFORMATION, "Account successfully created");
-				alert.show();
+				return;
 			}
+
+			Alert alert = new Alert(AlertType.INFORMATION, "Account successfully created");
+			alert.show();
+			// redirect to login
+			new LoginPage(scene).show();
 		});
 	}
 

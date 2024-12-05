@@ -2,52 +2,15 @@ package controller;
 
 import java.util.ArrayList;
 
-import javafx.scene.Scene;
 import model.User;
 import util.Result;
-import view.AdminPage;
-import view.EventOrganizerPage;
-import view.GuestPage;
-import view.VendorPage;
 
 public class UserController {
 
 	public static ArrayList<User> userList = new ArrayList<>();
 
-	public static void loginByRole(String email, Scene scene) {
-		userList = User.getUser();
-		User user = null;
-		for (User u : userList) {
-			if (u.getEmail().equals(email)) {
-				user = u;
-				break;
-			}
-		}
-		if (user.getRole().equals("Event Organizer")) {
-			new EventOrganizerPage(scene, user.getId());
-		} else if (user.getRole().equals("Admin")) {
-			new AdminPage(scene, user.getId());
-		} else if (user.getRole().equals("Guest")) {
-			new GuestPage(scene, user.getId());
-		} else {
-			new VendorPage(scene, user.getId());
-		}
-
-	}
-
-	public static User getUserById(int id) {
-		userList = User.getUser();
-		for (int i = 0; i < userList.size(); i++) {
-			if (userList.get(i).getId() == id) {
-				return userList.get(i);
-			}
-		}
-		return null;
-
-	}
-
-	public static Result<Void, String> validateLogin(String email, String password) {
-
+	public static Result<User, String> login(String email, String password) {
+		return User.login(email, password);
 	}
 
 	private static Result<Void, String> checkRegisterInput(String email, String name, String password) {
@@ -81,13 +44,15 @@ public class UserController {
 		if (userByName != null) {
 			return Result.err("Name must be unique");
 		}
+		if (role == null || role.isEmpty()) {
+			return Result.err("You must choose a role!");
+		}
 
 		Result<Void, String> validation = checkRegisterInput(email, name, password);
-
 		if (!validation.isOk()) {
 			return validation;
 		}
-
+		// if validation succeeds insert the user to the database
 		User.register(email, name, password, role);
 		return Result.ok(null);
 	}

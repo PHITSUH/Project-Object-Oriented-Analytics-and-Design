@@ -4,12 +4,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 
 public class VendorPage extends Page {
-	int id;
 
-	public VendorPage(Scene scene, int id) {
+	public VendorPage(Scene scene) {
 		super(scene);
-		this.id = id;
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override

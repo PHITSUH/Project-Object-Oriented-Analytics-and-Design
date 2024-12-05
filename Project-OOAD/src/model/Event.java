@@ -1,119 +1,72 @@
 package model;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
-import controller.UserController;
 import util.Connect;
 
 public class Event {
-	private int eventId;
-	private String eventName, eventDate, eventLocation, eventDescription;
-	private ArrayList<User> attendees;
+	private String id;
+	private String name, date, location, description;
+	private String organizerId;
 	private static Connect connect = Connect.getInstance();
 
-	public Event(int eventId, String eventName, String eventDate, String eventLocation, String eventDescription,
-			ArrayList<User> attendees) {
+	private Event(String id, String name, String date, String location, String description, String organizerId) {
 		super();
-		this.eventId = eventId;
-		this.eventName = eventName;
-		this.eventDate = eventDate;
-		this.eventLocation = eventLocation;
-		this.eventDescription = eventDescription;
-		this.attendees = attendees;
+		this.id = id;
+		this.name = name;
+		this.date = date;
+		this.location = location;
+		this.description = description;
+		this.organizerId = organizerId;
 	}
 
-	public static ArrayList<User> getAttendees(int id) {
-		ArrayList<User> attendeeList = new ArrayList<>();
+	public
 
-		String query = "SELECT * FROM event_attendees WHERE eventId = " + id;
-		connect.rs = connect.execQuery(query);
-		attendeeList = new ArrayList<>();
+	public static Event createEvent(String name, String date, String location, String description, String organizerId) {
+		String query = "INSERT INTO events (id, name, date, location, description, organizer_id) VALUES (?, ?, ?, ?, ?, ?)";
+		PreparedStatement ps = connect.addQuery(query);
+		String newId = generateNewId();
 
 		try {
-			while (connect.rs.next()) {
-				int userId = Integer.parseInt(connect.rs.getString("UserId"));
+			ps.setString(1, newId);
+			ps.setString(2, name);
+			ps.setString(3, date);
+			ps.setString(4, location);
+			ps.setString(5, description);
+			ps.setString(6, organizerId);
+			ps.executeUpdate();
 
-				attendeeList.add(UserController.getUserById(userId));
-			}
+			return new Event(newId, name, date, location, description, organizerId);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
-		return attendeeList;
 	}
 
-	public static ArrayList<Event> getEventByUserId(int id) {
-		ArrayList<Event> eventList = new ArrayList<>();
+	private static String generateNewId() {
+		String query = "SELECT MAX(id) AS maxId FROM events";
+		PreparedStatement ps = null;
+		int maxId = 0;
 
-		String query = "SELECT * FROM events WHERE userId = " + id;
-		connect.rs = connect.execQuery(query);
-		System.out.println("test");
-		eventList = new ArrayList<>();
 		try {
-			while (connect.rs.next()) {
-				int eventId = Integer.parseInt(connect.rs.getString("EventId"));
-				String eventName = connect.rs.getString("EventName");
-				String eventDate = connect.rs.getString("Eventz`Date");
-				String eventLocation = connect.rs.getString("EventLocation");
-				String eventDescription = connect.rs.getString("EventDescription");
-				ArrayList<User> attendeeList = getAttendees(id);
-				eventList.add(new Event(eventId, eventName, eventDate, eventLocation, eventDescription, attendeeList));
+			ps = connect.addQuery(query);
+			ResultSet rs = ps.executeQuery();
+
+			if (rs.next()) {
+				// Retrieve max ID and increment it
+				String maxIdStr = rs.getString("maxId");
+				if (maxIdStr != null) {
+					maxId = Integer.parseInt(maxIdStr);
+				}
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		return eventList;
+		// Increment and format the new ID
+		maxId += 1;
+		return String.format("%05d", maxId);
 	}
-
-	public int getEventId() {
-		return eventId;
-	}
-
-	public void setEventId(int eventId) {
-		this.eventId = eventId;
-	}
-
-	public String getEventName() {
-		return eventName;
-	}
-
-	public void setEventName(String eventName) {
-		this.eventName = eventName;
-	}
-
-	public String getEventDate() {
-		return eventDate;
-	}
-
-	public void setEventDate(String eventDate) {
-		this.eventDate = eventDate;
-	}
-
-	public String getEventLocation() {
-		return eventLocation;
-	}
-
-	public void setEventLocation(String eventLocation) {
-		this.eventLocation = eventLocation;
-	}
-
-	public String getEventDescription() {
-		return eventDescription;
-	}
-
-	public void setEventDescription(String eventDescription) {
-		this.eventDescription = eventDescription;
-	}
-
-	public ArrayList<User> getAttendees() {
-		return attendees;
-	}
-
-	public void setAttendees(ArrayList<User> attendees) {
-		this.attendees = attendees;
-	}
-
 }

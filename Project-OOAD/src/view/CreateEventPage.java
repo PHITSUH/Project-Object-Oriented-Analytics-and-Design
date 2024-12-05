@@ -12,11 +12,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import model.User;
 
-public class CreateEventPage extends AuthenticatedPage {
-	public CreateEventPage(Scene scene, User currentUser) {
-		super(scene, currentUser);
+public class CreateEventPage extends Page {
+	public CreateEventPage(Scene scene) {
+		super(scene);
 	}
 
 	private BorderPane mainPane;
@@ -28,7 +27,7 @@ public class CreateEventPage extends AuthenticatedPage {
 
 	public Pane init() {
 		mainPane = new BorderPane();
-		mainPane.setTop(ComponentFactory.eventOrganizerNavbar(scene, id));
+		mainPane.setTop(ComponentFactory.eventOrganizerNavbar(scene));
 
 		createLabel = new Label("Create Event");
 		createLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));

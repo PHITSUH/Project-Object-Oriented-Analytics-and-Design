@@ -22,8 +22,8 @@ public class ViewEventPage extends Page {
 	private Label viewLabel, emptyTableLabel;
 	private VBox mainBox;
 
-	public ViewEventPage(Scene scene, User currentUser) {
-		super(scene, currentUser);
+	public ViewEventPage(Scene scene) {
+		super(scene);
 	}
 
 	public Pane init() {
