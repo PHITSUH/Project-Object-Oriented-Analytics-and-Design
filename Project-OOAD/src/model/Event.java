@@ -3,6 +3,8 @@ package model;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Event extends Model {
 	private String id;
@@ -40,9 +42,30 @@ public class Event extends Model {
 		}
 	}
 
-	public static Event getEvents() {
+	public static List<Event> getAllEvents() {
 		String query = "SELECT * FROM events;";
+		PreparedStatement ps = null;
+		List<Event> events = new ArrayList<>();
 
+		try {
+			ps = connect.addQuery(query);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String id = rs.getString("EventId");
+				String name = rs.getString("EventName");
+				String date = rs.getString("EventDate");
+				String location = rs.getString("EventLocation");
+				String description = rs.getString("EventDescription");
+				String organizerId = rs.getString("OrganizerId");
+
+				events.add(new Event(id, name, date, location, description, organizerId));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return events;
 	}
 
 	private static String generateNewId() {

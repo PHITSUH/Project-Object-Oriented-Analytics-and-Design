@@ -1,7 +1,5 @@
 package view;
 
-import java.util.ArrayList;
-
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -11,19 +9,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import model.Event;
-import model.User;
 
 public class ViewEventPage extends Page<Void> {
 	private BorderPane mainPane;
 	private TableView<Event> tableView;
-	private ArrayList<Event> eventList;
 	private Label viewLabel, emptyTableLabel;
 	private VBox mainBox;
 
 	public Pane init() {
 		mainPane = new BorderPane();
 		mainPane.setTop(ComponentFactory.eventOrganizerNavbar());
-		eventList = User.getCurrentUser();
 		viewLabel = new Label("Events");
 		viewLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));
 		mainBox = new VBox();
