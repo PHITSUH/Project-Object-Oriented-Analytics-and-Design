@@ -2,7 +2,6 @@ package view;
 
 import java.util.ArrayList;
 
-import controller.EventController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -13,7 +12,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import model.Event;
-import model.User;
 
 public class ViewEventPage extends Page {
 	private BorderPane mainPane;
@@ -38,7 +36,7 @@ public class ViewEventPage extends Page {
 
 		// if there is no event, don't show a table
 		// show a label saying "no events"
-		if (tableView == ) {
+		if (tableView == null) {
 			emptyTableLabel = new Label("You don't have any event yet, create an event now.");
 			mainBox.getChildren().add(emptyTableLabel);
 		} else {
