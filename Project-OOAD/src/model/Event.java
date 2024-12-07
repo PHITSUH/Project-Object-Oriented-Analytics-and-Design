@@ -68,6 +68,25 @@ public class Event extends Model {
 		return events;
 	}
 
+	public static Event getEventById(String eventId) {
+		String query = "SELECT * FROM Event WHERE EventId LIKE '" + eventId + "'";
+		connect.rs = connect.execQuery(query);
+		try {
+			while (connect.rs.next()) {
+				String name = connect.rs.getString("EventName");
+				String date = connect.rs.getString("EventDate");
+				String loc = connect.rs.getString("EventLocation");
+				String desc = connect.rs.getString("EventDescription");
+				String organizerId = connect.rs.getString("OrganizerId");
+				return new Event(eventId, name, date, loc, desc, organizerId);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	private static String generateNewId() {
 		String query = "SELECT MAX(id) AS maxId FROM events";
 		PreparedStatement ps = null;

@@ -40,7 +40,7 @@ public class ComponentFactory {
 		});
 
 		viewEvent.setOnAction(e -> {
-			EventOrganizerController.viewViewEventPage();
+			EventOrganizerController.viewOrganizedEvents();
 		});
 
 		return menuBar;

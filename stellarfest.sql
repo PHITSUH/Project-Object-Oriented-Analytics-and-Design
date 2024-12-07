@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 05, 2024 at 04:46 PM
+-- Generation Time: Dec 07, 2024 at 04:39 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -39,6 +39,20 @@ CREATE TABLE `event` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `invitation`
+--
+
+CREATE TABLE `invitation` (
+  `InvitationId` varchar(255) NOT NULL,
+  `EventId` varchar(255) NOT NULL,
+  `UserId` varchar(255) NOT NULL,
+  `InvitationStatus` varchar(255) NOT NULL,
+  `InvitationRole` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -62,6 +76,14 @@ ALTER TABLE `event`
   ADD KEY `OrganizerId` (`OrganizerId`);
 
 --
+-- Indexes for table `invitation`
+--
+ALTER TABLE `invitation`
+  ADD PRIMARY KEY (`InvitationId`),
+  ADD KEY `EventId` (`EventId`),
+  ADD KEY `UserId` (`UserId`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -76,6 +98,13 @@ ALTER TABLE `user`
 --
 ALTER TABLE `event`
   ADD CONSTRAINT `event_ibfk_1` FOREIGN KEY (`OrganizerId`) REFERENCES `user` (`UserId`);
+
+--
+-- Constraints for table `invitation`
+--
+ALTER TABLE `invitation`
+  ADD CONSTRAINT `invitation_ibfk_1` FOREIGN KEY (`EventId`) REFERENCES `event` (`EventId`),
+  ADD CONSTRAINT `invitation_ibfk_2` FOREIGN KEY (`UserId`) REFERENCES `user` (`UserId`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

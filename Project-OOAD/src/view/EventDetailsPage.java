@@ -2,12 +2,12 @@ package view;
 
 import java.util.List;
 
-import javafx.event.Event;
 import javafx.scene.layout.Pane;
+import model.Event;
 import model.User;
 
 public class EventDetailsPage extends Page<EventDetailsPage.Props> {
-	public class Props {
+	public static class Props {
 		protected Event event;
 		protected List<User> participants;
 

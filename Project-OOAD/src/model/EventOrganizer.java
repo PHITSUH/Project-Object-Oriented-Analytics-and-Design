@@ -13,7 +13,7 @@ public class EventOrganizer extends User {
 		super(id, email, username, password, role);
 	}
 
-	public List<Event> viewOrganizedEvents() {
+	public static List<Event> viewOrganizedEvents() {
 		String query = "SELECT * FROM event WHERE OrganizerId LIKE " + User.getCurrentUser().getId();
 		connect.rs = connect.execQuery(query);
 		ArrayList<Event> eventList = new ArrayList<>();
