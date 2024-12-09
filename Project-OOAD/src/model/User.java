@@ -38,7 +38,7 @@ public abstract class User extends Model {
 
 	protected static List<User> getAllUsers() {
 		ArrayList<User> userList = new ArrayList<>();
-		String query = "SELECT * FROM users";
+		String query = "SELECT * FROM user";
 		connect.rs = connect.execQuery(query);
 		userList = new ArrayList<>();
 		try {
@@ -78,7 +78,7 @@ public abstract class User extends Model {
 			maxId = Math.max(maxId, nextId);
 		}
 
-		String query = "INSERT INTO users VALUES(?, ?, ?, ?, ?)";
+		String query = "INSERT INTO user VALUES(?, ?, ?, ?, ?)";
 		PreparedStatement ps = connect.addQuery(query);
 		try {
 			ps.setString(1, String.format("%05d", maxId));
@@ -153,7 +153,7 @@ public abstract class User extends Model {
 	}
 
 	public void changeProfile(String email, String name, String oldPassword, String newPassword) {
-		String query = "UPDATE users SET Email = ? , Name = ?, Password = ? WHERE Id = ?";
+		String query = "UPDATE user SET Email = ? , Name = ?, Password = ? WHERE Id = ?";
 		PreparedStatement ps = connect.addQuery(query);
 		try {
 			ps.setString(1, email);

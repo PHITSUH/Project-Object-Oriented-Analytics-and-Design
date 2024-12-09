@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 
 import model.Admin;
+import model.Event;
 import model.EventOrganizer;
 import model.User;
 import model.Vendor;
@@ -39,7 +40,7 @@ public class UserController extends Controller {
 		} else if (u instanceof Vendor) {
 			navigate(new VendorPage());
 		} else if (u instanceof EventOrganizer) {
-			navigate(new ViewEventPage());
+			navigate(new ViewEventPage(), Event.getEventByOrganizerId());
 		} else {
 			navigate(new GuestPage());
 		}
@@ -83,7 +84,7 @@ public class UserController extends Controller {
 		}
 
 		Result<Void, String> validation = checkRegisterInput(email, name, password);
-		if (!validation.isOk()) {
+		if (validation.isErr()) {
 			return validation;
 		}
 		// if validation succeeds insert the user to the database

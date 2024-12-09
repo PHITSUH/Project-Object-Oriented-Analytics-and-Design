@@ -12,7 +12,7 @@ public class Guest extends User {
 	}
 
 	public static List<User> getGuestsByTransactionID(String eventID) {
-		String query = "SELECT User.* FROM Invitation Join User ON Invitation.UserId = User.UserId WHERE EventId LIKE '"
+		String query = "SELECT User.* FROM Invitation JOIN User ON Invitation.UserId = User.UserId WHERE EventId LIKE '"
 				+ eventID + "' AND InvitationRole LIKE 'Guest' AND InvitationStatus LIKE 'Accepted'";
 		connect.rs = connect.execQuery(query);
 		List<User> guestList = new ArrayList<>();

@@ -1,9 +1,5 @@
 package model;
 
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import util.Connect;
 
 public class EventOrganizer extends User {
@@ -13,24 +9,16 @@ public class EventOrganizer extends User {
 		super(id, email, username, password, role);
 	}
 
-	public static List<Event> viewOrganizedEvents() {
-		String query = "SELECT * FROM event WHERE OrganizerId LIKE " + User.getCurrentUser().getId();
-		connect.rs = connect.execQuery(query);
-		ArrayList<Event> eventList = new ArrayList<>();
-		try {
-			while (connect.rs.next()) {
-				String eventId = connect.rs.getString("EventId");
-				String eventName = connect.rs.getString("EventName");
-				String eventDate = connect.rs.getString("EventDate");
-				String eventLocation = connect.rs.getString("EventLocation");
-				String eventDescription = connect.rs.getString("EventDescription");
-				String organizerId = connect.rs.getString("OrganizerId");
-				eventList.add(new Event(eventId, eventName, eventDate, eventLocation, eventDescription, organizerId));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return eventList;
+	public static void createEvent(String name, String date, String location, String description, String organizerId) {
+
+	}
+
+	public static void checkCreateEventInput(String name, String date, String location, String description) {
+
+	}
+
+	public static void viewOrganizedEvents() {
+
 	}
 
 }

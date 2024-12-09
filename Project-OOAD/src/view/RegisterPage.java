@@ -29,7 +29,7 @@ public class RegisterPage extends Page<Void> {
 	private Button submitButton;
 
 	public void event() {
-		submitButton.setOnMouseClicked(e -> {
+		submitButton.setOnAction(e -> {
 			Result<Void, String> result = UserController.register(emailField.getText(), usernameField.getText(),
 					passwordField.getText(), roleComboBox.getValue());
 

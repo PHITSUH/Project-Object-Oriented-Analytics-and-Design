@@ -1,7 +1,10 @@
 package view;
 
+import controller.EventOrganizerController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
@@ -11,6 +14,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import model.User;
+import util.Result;
 
 public class CreateEventPage extends Page<Void> {
 	private BorderPane mainPane;
@@ -19,6 +24,25 @@ public class CreateEventPage extends Page<Void> {
 	private Label nameLabel, dateLabel, locationLabel, descLabel, createLabel;
 	private VBox mainBox, nameBox, dateBox, locationBox, descBox;
 	private Button submitButton;
+
+	public void event() {
+		submitButton.setOnAction(e -> {
+			System.out.println("test");
+			Result<Void, String> createEvent = EventOrganizerController.createEvent(nameField.getText(),
+					datePicker.getValue(), locationField.getText(), descField.getText(), User.getCurrentUser().getId());
+			if (createEvent.isErr()) {
+				Alert alert = new Alert(AlertType.WARNING);
+				alert.setContentText(createEvent.getError());
+				alert.show();
+				return;
+			} else {
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setContentText("Event Created!");
+				alert.show();
+			}
+
+		});
+	}
 
 	public Pane init() {
 		mainPane = new BorderPane();
@@ -72,6 +96,7 @@ public class CreateEventPage extends Page<Void> {
 		mainBox.getChildren().addAll(createLabel, nameBox, dateBox, locationBox, descBox, submitButton);
 		mainBox.setAlignment(Pos.CENTER);
 		mainPane.setCenter(mainBox);
+		event();
 
 		return mainPane;
 	}

@@ -27,7 +27,7 @@ public class LoginPage extends Page<Void> {
 	private Button submitButton;
 
 	public void event() {
-		submitButton.setOnMouseClicked(e -> {
+		submitButton.setOnAction(e -> {
 			Result<User, String> result = UserController.login(emailField.getText(), passwordField.getText());
 
 			if (result.isErr()) {

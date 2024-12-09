@@ -18,11 +18,12 @@ public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		Scene primaryScene = new Scene(new Pane(), 800, 500);
-		Controller.initialize(primaryStage.getScene());
+
 		Page<Void> page = new LoginPage();
 		page.show(primaryScene);
 
 		primaryStage.setScene(primaryScene);
+		Controller.initialize(primaryStage.getScene());
 		primaryStage.show();
 	}
 }

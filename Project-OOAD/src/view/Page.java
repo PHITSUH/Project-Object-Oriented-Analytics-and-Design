@@ -7,13 +7,10 @@ public abstract class Page<T> {
 	protected Pane root;
 	protected T data;
 
-	public Page() {
-		this.root = initRoot();
-	}
-
 	abstract Pane initRoot();
 
 	public void show(Scene scene) {
+		this.root = initRoot();
 		scene.setRoot(root);
 	}
 

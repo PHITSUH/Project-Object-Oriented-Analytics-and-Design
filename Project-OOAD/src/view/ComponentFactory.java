@@ -26,6 +26,11 @@ public class ComponentFactory {
 		return menuBar;
 	}
 
+	static MenuItem changeProfileMenuItem() {
+		MenuItem changeProfile = new MenuItem("Change Profile");
+		return changeProfile;
+	}
+
 	static MenuBar eventOrganizerNavbar() {
 		MenuBar menuBar = new MenuBar();
 		Menu EOMenu = new Menu("Actions");
