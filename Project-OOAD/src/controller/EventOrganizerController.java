@@ -9,6 +9,7 @@ import model.Guest;
 import model.User;
 import model.Vendor;
 import util.Result;
+import view.AddVendorView;
 import view.CreateEventPage;
 import view.EventDetailsPage;
 import view.EventDetailsPage.Props;
@@ -16,12 +17,12 @@ import view.ViewEventPage;
 
 public class EventOrganizerController extends Controller {
 
-	public static void viewOrganizedEventDetails(String eventId) {
+	public static void viewOrganizedEventDetails(Event event) {
 		List<User> participantList = new ArrayList<>();
-		participantList.addAll(getGuestsByTransactionID(eventId));
-		participantList.addAll(getVendorsByTransactionID(eventId));
+		participantList.addAll(getGuestsByTransactionID(event.getId()));
+		participantList.addAll(getVendorsByTransactionID(event.getId()));
 
-		navigate(new EventDetailsPage(), new Props(Event.getEventById(eventId), participantList));
+		navigate(new EventDetailsPage(), new Props(event, participantList));
 	}
 
 	public static List<User> getGuestsByTransactionID(String eventId) {
@@ -58,6 +59,13 @@ public class EventOrganizerController extends Controller {
 		return Result.ok(null);
 	}
 
+	public static Result<Void, String> eventSelected(Event selectedEvent) {
+		if (selectedEvent == null) {
+			return Result.err("Select an Event First!");
+		}
+		return Result.ok(null);
+	}
+
 	public static Result<Void, String> createEvent(String name, LocalDate date, String location, String description,
 			String organizerId) {
 		Result<Void, String> check = checkCreateEventInput(name, date, location, description);
@@ -66,6 +74,13 @@ public class EventOrganizerController extends Controller {
 		Event.createEvent(name, date.toString(), location, description, organizerId);
 		viewOrganizedEvents();
 		return Result.ok(null);
+	}
+
+	public static void viewAddVendor(Event event) {
+		navigate(new AddVendorView(), event);
+	}
+
+	public static void viewAddGuest(Event event) {
 
 	}
 

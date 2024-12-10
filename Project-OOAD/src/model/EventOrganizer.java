@@ -13,11 +13,43 @@ public class EventOrganizer extends User {
 
 	}
 
+	public static void viewOrganizedEvent(String userId) {
+
+	}
+
+	public static void viewOrganizedEventDetails(String eventId) {
+
+	}
+
+	public static void getGuestsByTransactionId(String eventId) {
+
+	}
+
+	public static void getVendorsByTransactionId(String eventId) {
+
+	}
+
 	public static void checkCreateEventInput(String name, String date, String location, String description) {
 
 	}
 
+	public static void checkAddVendorInput(String vendorId) {
+
+	}
+
+	public static void checkAddGuestInput(String vendorId) {
+
+	}
+
 	public static void viewOrganizedEvents() {
+
+	}
+
+	public static void GetVendors() {
+
+	}
+
+	public static void getGuests() {
 
 	}
 

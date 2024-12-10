@@ -3,16 +3,22 @@ package view;
 import java.util.List;
 
 import controller.EventController;
+import controller.EventOrganizerController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import model.Event;
+import util.Result;
 
 public class ViewEventPage extends Page<List<Event>> {
 
@@ -20,6 +26,56 @@ public class ViewEventPage extends Page<List<Event>> {
 	private TableView<Event> tableView;
 	private Label viewLabel, emptyTableLabel;
 	private VBox mainBox;
+	private HBox buttonBox;
+	private Button addVendorButton, addGuestButton, viewDetailButton, changeEventButton;
+
+	public void event() {
+		addVendorButton.setOnAction(e -> {
+			Event selectedEvent = tableView.getSelectionModel().getSelectedItem();
+			Result<Void, String> result = EventOrganizerController.eventSelected(selectedEvent);
+			if (result.isErr()) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText(result.getError());
+				alert.show();
+				return;
+			}
+
+			EventOrganizerController.viewAddVendor(selectedEvent);
+		});
+
+		addGuestButton.setOnAction(e -> {
+			Event selectedEvent = tableView.getSelectionModel().getSelectedItem();
+			Result<Void, String> result = EventOrganizerController.eventSelected(selectedEvent);
+			if (result.isErr()) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText(result.getError());
+				alert.show();
+				return;
+			}
+		});
+
+		viewDetailButton.setOnAction(e -> {
+			Event selectedEvent = tableView.getSelectionModel().getSelectedItem();
+			Result<Void, String> result = EventOrganizerController.eventSelected(selectedEvent);
+			if (result.isErr()) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText(result.getError());
+				alert.show();
+				return;
+			}
+		});
+
+		changeEventButton.setOnAction(e -> {
+			Event selectedEvent = tableView.getSelectionModel().getSelectedItem();
+			Result<Void, String> result = EventOrganizerController.eventSelected(selectedEvent);
+			if (result.isErr()) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText(result.getError());
+				alert.show();
+				return;
+			}
+		});
+	}
 
 	public Pane init() {
 
@@ -44,7 +100,27 @@ public class ViewEventPage extends Page<List<Event>> {
 			mainBox.getChildren().add(tableView);
 		}
 
+		buttonBox = new HBox(10);
+
+		addVendorButton = new Button("Add Vendor");
+		addVendorButton.setPrefWidth(50);
+
+		addGuestButton = new Button("Add Guest");
+		addGuestButton.setPrefWidth(50);
+
+		viewDetailButton = new Button("View Event Detail");
+		viewDetailButton.setPrefWidth(50);
+
+		changeEventButton = new Button("Change Event Name");
+		changeEventButton.setPrefWidth(50);
+
+		buttonBox.getChildren().addAll(addVendorButton, addGuestButton, viewDetailButton);
+
+		mainBox.getChildren().add(buttonBox);
+
 		mainPane.setCenter(mainBox);
+
+		event();
 		return mainPane;
 	}
 
