@@ -67,10 +67,18 @@ public class EventOrganizerController extends Controller {
 		return Result.ok(null);
 	}
 
+	public static Result<Void, String> checkAddGuestInput(User selectedGuest, String eventId) {
+		if (selectedGuest == null)
+			return Result.err("Select a Guest First!");
+		if (Invitation.isInvited(eventId, selectedGuest.getId()))
+			return Result.err("Guest has already been invited");
+
+		return Result.ok(null);
+	}
+
 	public static Result<Void, String> checkAddVendorInput(User selectedVendor, String eventId) {
-		if (selectedVendor == null) {
+		if (selectedVendor == null)
 			return Result.err("Select a Vendor First!");
-		}
 		if (Invitation.isInvited(eventId, selectedVendor.getId()))
 			return Result.err("Vendor has already been invited");
 		return Result.ok(null);

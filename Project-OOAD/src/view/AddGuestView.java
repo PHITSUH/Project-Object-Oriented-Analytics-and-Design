@@ -2,9 +2,12 @@ package view;
 
 import java.util.List;
 
+import controller.EventOrganizerController;
 import controller.GuestController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
@@ -15,7 +18,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import model.Event;
+import model.Invitation;
 import model.User;
+import util.Result;
 
 public class AddGuestView extends Page<view.AddGuestView.Props> {
 	public static class Props {
@@ -35,6 +40,36 @@ public class AddGuestView extends Page<view.AddGuestView.Props> {
 	TableView<User> guestView;
 	Button backButton, submitButton, addVendorButton;
 	HBox buttonBox;
+
+	public void event() {
+		backButton.setOnAction(e -> {
+			EventOrganizerController.viewOrganizedEvents();
+			return;
+		});
+
+		submitButton.setOnAction(e -> {
+			User selectedGuest = guestView.getSelectionModel().getSelectedItem();
+			Result<Void, String> result = EventOrganizerController.checkAddGuestInput(selectedGuest,
+					data.event.getId());
+			if (result.isErr()) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText(result.getError());
+				alert.show();
+				return;
+			}
+			Invitation.sendInvitation(data.event, selectedGuest);
+
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setContentText("Guest has been invited to the event!");
+			alert.showAndWait();
+			EventOrganizerController.viewOrganizedEvents();
+			return;
+		});
+
+		addVendorButton.setOnAction(e -> {
+			EventOrganizerController.viewAddVendor(data.event);
+		});
+	}
 
 	public Pane init() {
 		mainPane = new BorderPane();
@@ -57,8 +92,9 @@ public class AddGuestView extends Page<view.AddGuestView.Props> {
 			mainBox.getChildren().add(guestView);
 		}
 
-		buttonBox = new HBox();
+		buttonBox = new HBox(10);
 		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setPadding(new Insets(10));
 
 		submitButton = new Button("Add Guest");
 		submitButton.setPrefWidth(200);
@@ -71,7 +107,10 @@ public class AddGuestView extends Page<view.AddGuestView.Props> {
 
 		buttonBox.getChildren().addAll(backButton, submitButton, addVendorButton);
 
+		mainBox.getChildren().add(buttonBox);
+
 		mainPane.setCenter(mainBox);
+		event();
 
 		return mainPane;
 	}

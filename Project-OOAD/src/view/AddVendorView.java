@@ -65,6 +65,10 @@ public class AddVendorView extends Page<view.AddVendorView.Props> {
 			EventOrganizerController.viewOrganizedEvents();
 			return;
 		});
+
+		addGuestButton.setOnAction(e -> {
+			EventOrganizerController.viewAddGuest(data.event);
+		});
 	}
 
 	public Pane init() {
