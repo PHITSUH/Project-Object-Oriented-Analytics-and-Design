@@ -40,7 +40,7 @@ public class RegisterPage extends Page<Void> {
 			}
 
 			Alert alert = new Alert(AlertType.INFORMATION, "Account successfully created");
-			alert.show();
+			alert.showAndWait();
 		});
 	}
 

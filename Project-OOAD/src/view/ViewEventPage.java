@@ -52,6 +52,7 @@ public class ViewEventPage extends Page<List<Event>> {
 				alert.show();
 				return;
 			}
+			EventOrganizerController.viewAddGuest(selectedEvent);
 		});
 
 		viewDetailButton.setOnAction(e -> {
@@ -63,6 +64,8 @@ public class ViewEventPage extends Page<List<Event>> {
 				alert.show();
 				return;
 			}
+			EventOrganizerController.viewOrganizedEventDetails(selectedEvent);
+
 		});
 
 		changeEventButton.setOnAction(e -> {
@@ -101,20 +104,22 @@ public class ViewEventPage extends Page<List<Event>> {
 		}
 
 		buttonBox = new HBox(10);
+		buttonBox.setAlignment(Pos.CENTER);
+		buttonBox.setPadding(new Insets(10));
 
 		addVendorButton = new Button("Add Vendor");
-		addVendorButton.setPrefWidth(50);
+		addVendorButton.setPrefWidth(200);
 
 		addGuestButton = new Button("Add Guest");
-		addGuestButton.setPrefWidth(50);
+		addGuestButton.setPrefWidth(200);
 
 		viewDetailButton = new Button("View Event Detail");
-		viewDetailButton.setPrefWidth(50);
+		viewDetailButton.setPrefWidth(200);
 
 		changeEventButton = new Button("Change Event Name");
-		changeEventButton.setPrefWidth(50);
+		changeEventButton.setPrefWidth(200);
 
-		buttonBox.getChildren().addAll(addVendorButton, addGuestButton, viewDetailButton);
+		buttonBox.getChildren().addAll(addVendorButton, addGuestButton, viewDetailButton, changeEventButton);
 
 		mainBox.getChildren().add(buttonBox);
 

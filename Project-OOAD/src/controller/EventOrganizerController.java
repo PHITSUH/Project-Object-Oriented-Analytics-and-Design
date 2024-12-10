@@ -6,13 +6,14 @@ import java.util.List;
 
 import model.Event;
 import model.Guest;
+import model.Invitation;
 import model.User;
 import model.Vendor;
 import util.Result;
+import view.AddGuestView;
 import view.AddVendorView;
 import view.CreateEventPage;
 import view.EventDetailsPage;
-import view.EventDetailsPage.Props;
 import view.ViewEventPage;
 
 public class EventOrganizerController extends Controller {
@@ -22,7 +23,7 @@ public class EventOrganizerController extends Controller {
 		participantList.addAll(getGuestsByTransactionID(event.getId()));
 		participantList.addAll(getVendorsByTransactionID(event.getId()));
 
-		navigate(new EventDetailsPage(), new Props(event, participantList));
+		navigate(new EventDetailsPage(), new view.EventDetailsPage.Props(event, participantList));
 	}
 
 	public static List<User> getGuestsByTransactionID(String eventId) {
@@ -66,6 +67,15 @@ public class EventOrganizerController extends Controller {
 		return Result.ok(null);
 	}
 
+	public static Result<Void, String> checkAddVendorInput(User selectedVendor, String eventId) {
+		if (selectedVendor == null) {
+			return Result.err("Select a Vendor First!");
+		}
+		if (Invitation.isInvited(eventId, selectedVendor.getId()))
+			return Result.err("Vendor has already been invited");
+		return Result.ok(null);
+	}
+
 	public static Result<Void, String> createEvent(String name, LocalDate date, String location, String description,
 			String organizerId) {
 		Result<Void, String> check = checkCreateEventInput(name, date, location, description);
@@ -76,12 +86,20 @@ public class EventOrganizerController extends Controller {
 		return Result.ok(null);
 	}
 
+	public static List<User> getVendors() {
+		return Vendor.getAllVendors();
+	}
+
+	public static List<User> getGuests() {
+		return Guest.getAllGuests();
+	}
+
 	public static void viewAddVendor(Event event) {
-		navigate(new AddVendorView(), event);
+		navigate(new AddVendorView(), new view.AddVendorView.Props(event, getVendors()));
 	}
 
 	public static void viewAddGuest(Event event) {
-
+		navigate(new AddGuestView(), new view.AddGuestView.Props(event, getGuests()));
 	}
 
 	public static void viewOrganizedEvents() {
