@@ -60,9 +60,15 @@ public class Invitation extends Model {
 			e.printStackTrace();
 		}
 	}
+<<<<<<< Updated upstream
 
 	public String acceptInvitation(String invitationId) {
 		String query = "UPDATE invitation SET invitationStatus = ? WHERE invitationId = ?";
+=======
+	
+	public static String acceptInvitation(String invitationId) {
+		String query = "UPDATE invitation SET invitationStatus = ? WHERE id = ?";
+>>>>>>> Stashed changes
 		PreparedStatement ps = connect.addQuery(query);
 
 		try {
@@ -74,6 +80,7 @@ public class Invitation extends Model {
 		}
 		return "Invitation Accepted";
 	}
+<<<<<<< Updated upstream
 
 	public static Boolean isInvited(String eventId, String userId) {
 		String query = "SELECT InvitationId FROM Invitation WHERE UserId LIKE ? AND EventId LIKE ?";
@@ -97,6 +104,11 @@ public class Invitation extends Model {
 
 	public static ArrayList<Invitation> getInvitations(String email) {
 		String query = "SELECT * FROM invitation i JOIN users u ON i.userId = u.userId WHERE userEmail = ?";
+=======
+	
+	public static ArrayList<Invitation> getInvitationsByEmail(String email) {
+		String query = "SELECT * FROM invitations i JOIN users u ON i.userId = u.userId WHERE userEmail = ?";
+>>>>>>> Stashed changes
 		PreparedStatement ps = connect.addQuery(query);
 		ArrayList<Invitation> resArr = new ArrayList<>();
 

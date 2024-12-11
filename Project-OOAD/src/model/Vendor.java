@@ -5,10 +5,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import controller.InvitationController;
+
 public class Vendor extends User {
 
+	private ArrayList<Invitation> acceptedInvitations; 
+	
 	public Vendor(String id, String email, String name, String password, String role) {
 		super(id, email, name, password, role);
+		acceptedInvitations = new ArrayList<>();
 	}
 
 	public static List<User> getAllVendors() {
@@ -69,5 +74,11 @@ public class Vendor extends User {
 		}
 		return null;
 
+	}
+	
+	
+	
+	public String acceptInvitation(String InvitationId) {
+		return InvitationController.acceptInvitation(InvitationId);;
 	}
 }

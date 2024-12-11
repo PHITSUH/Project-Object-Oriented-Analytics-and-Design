@@ -10,9 +10,13 @@ public class InvitationController {
 		
 	}
 	
-	private ArrayList<Invitation> getInvitation(String email) {
+	public static ArrayList<Invitation> getInvitation(String email) {
 		// TODO Auto-generated method stub
-		return Invitation.getInvitations(email);
+		return Invitation.getInvitationsByEmail(email);
+	}
+	
+	public static String acceptInvitation(String InvitationId) {
+		return Invitation.acceptInvitation(InvitationId);
 	}
 
 }
