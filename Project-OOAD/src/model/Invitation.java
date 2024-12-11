@@ -4,6 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class Invitation extends Model {
 
@@ -95,7 +96,7 @@ public class Invitation extends Model {
 
 	}
 
-	public static ArrayList<Invitation> getInvitationsByEmail(String email) {
+	public static List<Invitation> getInvitationsByEmail(String email) {
 		String query = "SELECT * FROM invitation i JOIN users u ON i.userId = u.userId WHERE userEmail = ?";
 		PreparedStatement ps = connect.addQuery(query);
 		ArrayList<Invitation> resArr = new ArrayList<>();
