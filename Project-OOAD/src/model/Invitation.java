@@ -69,6 +69,7 @@ public class Invitation extends Model {
 	public static String acceptInvitation(String invitationId) {
 		String query = "UPDATE invitation SET invitationStatus = ? WHERE id = ?";
 >>>>>>> Stashed changes
+		String query = "UPDATE invitation SET invitationStatus = ? WHERE invitationId = ?";
 		PreparedStatement ps = connect.addQuery(query);
 
 		try {
@@ -109,6 +110,7 @@ public class Invitation extends Model {
 	public static ArrayList<Invitation> getInvitationsByEmail(String email) {
 		String query = "SELECT * FROM invitations i JOIN users u ON i.userId = u.userId WHERE userEmail = ?";
 >>>>>>> Stashed changes
+		String query = "SELECT * FROM invitation i JOIN users u ON i.userId = u.userId WHERE userEmail = ?";
 		PreparedStatement ps = connect.addQuery(query);
 		ArrayList<Invitation> resArr = new ArrayList<>();
 
