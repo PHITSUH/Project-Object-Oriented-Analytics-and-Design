@@ -12,7 +12,7 @@ public class InvitationController {
 	
 	public static ArrayList<Invitation> getInvitation(String email) {
 		// TODO Auto-generated method stub
-		return Invitation.getInvitationsByEmail(email);
+		return Invitation.getInvitations(email);
 	}
 	
 	public static String acceptInvitation(String InvitationId) {
