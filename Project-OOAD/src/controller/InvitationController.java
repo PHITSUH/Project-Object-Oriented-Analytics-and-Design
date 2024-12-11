@@ -1,6 +1,6 @@
 package controller;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import model.Invitation;
 
@@ -10,7 +10,7 @@ public class InvitationController {
 
 	}
 
-	public static ArrayList<Invitation> getInvitation(String email) {
+	public static List<Invitation> getInvitation(String email) {
 		// TODO Auto-generated method stub
 		return Invitation.getInvitationsByEmail(email);
 	}
