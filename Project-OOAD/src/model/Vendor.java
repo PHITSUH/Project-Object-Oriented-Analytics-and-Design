@@ -79,6 +79,6 @@ public class Vendor extends User {
 	
 	
 	public String acceptInvitation(String InvitationId) {
-		return InvitationController.acceptInvitation(InvitationId);;
+		return InvitationController.acceptInvitation(InvitationId);
 	}
 }
