@@ -8,7 +8,7 @@ import javafx.stage.Stage;
 public abstract class Page<T> {
 	protected Pane root;
 	protected T data;
-	Stage popupStage;
+	protected Stage popupStage;
 
 	abstract Pane initRoot();
 
