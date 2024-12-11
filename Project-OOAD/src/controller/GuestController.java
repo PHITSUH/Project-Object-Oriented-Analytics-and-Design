@@ -13,7 +13,7 @@ import model.User;
 public class GuestController extends Controller {
 
 	public static List<User> filterGuest(List<User> participants) {
-		return participants.stream().filter((vendor) -> vendor.getRole().equals("Guest")).collect(Collectors.toList());
+		return participants.stream().filter((guest) -> guest.getRole().equals("Guest")).collect(Collectors.toList());
 	}
 
 	public static TableView<User> createTableView(List<User> guestList) {

@@ -77,6 +77,8 @@ public class ViewEventPage extends Page<List<Event>> {
 				alert.show();
 				return;
 			}
+
+			EventOrganizerController.viewChangeEventPage(selectedEvent);
 		});
 	}
 
@@ -133,6 +135,7 @@ public class ViewEventPage extends Page<List<Event>> {
 	Pane initRoot() {
 		// TODO Auto-generated method stub
 		Pane root = init();
+
 		return root;
 	}
 

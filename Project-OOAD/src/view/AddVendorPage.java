@@ -22,7 +22,7 @@ import model.Invitation;
 import model.User;
 import util.Result;
 
-public class AddVendorView extends Page<view.AddVendorView.Props> {
+public class AddVendorPage extends Page<view.AddVendorPage.Props> {
 	public static class Props {
 		protected Event event;
 		protected List<User> vendorList;

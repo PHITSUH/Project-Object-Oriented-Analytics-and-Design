@@ -10,8 +10,9 @@ import model.Invitation;
 import model.User;
 import model.Vendor;
 import util.Result;
-import view.AddGuestView;
-import view.AddVendorView;
+import view.AddGuestPage;
+import view.AddVendorPage;
+import view.ChangeEventPage;
 import view.CreateEventPage;
 import view.EventDetailsPage;
 import view.ViewEventPage;
@@ -67,6 +68,14 @@ public class EventOrganizerController extends Controller {
 		return Result.ok(null);
 	}
 
+	public static Result<Void, String> checkEditEventInput(String name, Event event) {
+		if (name == null || name.isEmpty())
+			return Result.err("Name is Empty");
+		if (name.equals(event.getName()))
+			return Result.err("Event name must be different");
+		return Result.ok(null);
+	}
+
 	public static Result<Void, String> checkAddGuestInput(User selectedGuest, String eventId) {
 		if (selectedGuest == null)
 			return Result.err("Select a Guest First!");
@@ -103,11 +112,11 @@ public class EventOrganizerController extends Controller {
 	}
 
 	public static void viewAddVendor(Event event) {
-		navigate(new AddVendorView(), new view.AddVendorView.Props(event, getVendors()));
+		navigate(new AddVendorPage(), new view.AddVendorPage.Props(event, getVendors()));
 	}
 
 	public static void viewAddGuest(Event event) {
-		navigate(new AddGuestView(), new view.AddGuestView.Props(event, getGuests()));
+		navigate(new AddGuestPage(), new view.AddGuestPage.Props(event, getGuests()));
 	}
 
 	public static void viewOrganizedEvents() {
@@ -118,5 +127,9 @@ public class EventOrganizerController extends Controller {
 
 	public static void viewCreateEventPage() {
 		navigate(new CreateEventPage());
+	}
+
+	public static void viewChangeEventPage(Event event) {
+		popup(new ChangeEventPage(), event);
 	}
 }

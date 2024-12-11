@@ -42,6 +42,19 @@ public class Event extends Model {
 		}
 	}
 
+	public static void editEventName(String name, String id) {
+		String query = "UPDATE event SET eventName = ? WHERE eventId LIKE ?";
+		PreparedStatement ps = connect.addQuery(query);
+		try {
+			ps.setString(1, name);
+			ps.setString(2, id);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public static List<Event> getEventByOrganizerId() {
 		String query = "SELECT * FROM event WHERE OrganizerId LIKE ?";
 		PreparedStatement ps = connect.addQuery(query);

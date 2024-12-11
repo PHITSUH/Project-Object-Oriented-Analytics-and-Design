@@ -24,4 +24,14 @@ public abstract class Controller {
 		page.withData(data);
 		page.show(primaryScene);
 	}
+
+	protected static <T> void popup(Page<T> page, T data) {
+		if (primaryScene == null) {
+			throw new IllegalStateException("Controller not yet initialized!");
+		}
+
+		page.withData(data);
+		page.popup();
+	}
+
 }
