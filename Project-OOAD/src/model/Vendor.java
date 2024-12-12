@@ -9,11 +9,11 @@ import controller.InvitationController;
 
 public class Vendor extends User {
 
-	private ArrayList<Invitation> acceptedInvitations; 
-	
+	private ArrayList<Invitation> acceptedInvitations;
+
 	public Vendor(String id, String email, String name, String password, String role) {
 		super(id, email, name, password, role);
-		acceptedInvitations = InvitationController.getInvitation(email);
+		acceptedInvitations = (ArrayList<Invitation>) InvitationController.getInvitationsByEmail(email);
 	}
 
 	public static List<User> getAllVendors() {
@@ -75,13 +75,13 @@ public class Vendor extends User {
 		return null;
 
 	}
-	
+
 	public String acceptInvitation(String InvitationId) {
 		return InvitationController.acceptInvitation(InvitationId);
 	}
-	
+
 	public void reloadAccepted() {
 		acceptedInvitations.clear();
-		acceptedInvitations.addAll(InvitationController.getInvitation(this.getEmail()));
+		acceptedInvitations.addAll(InvitationController.getInvitationsByEmail(this.getEmail()));
 	}
 }
