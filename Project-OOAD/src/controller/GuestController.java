@@ -1,19 +1,35 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import model.Event;
+import model.Guest;
+import model.Invitation;
 import model.User;
+import view.ViewEventPage;
+import view.ViewInvitationPage;
 
 public class GuestController extends Controller {
 
 	public static List<User> filterGuest(List<User> participants) {
-		return participants.stream().filter((guest) -> guest.getRole().equals("Guest")).collect(Collectors.toList());
+		List<User> guestList = new ArrayList<>();
+		for (User u : participants)
+			if (u instanceof Guest)
+				guestList.add(u);
+
+		return guestList;
+	}
+
+	public static void viewOrganizedEvents() {
+		// fetch shit here
+		List<Event> eventList = Event.getAcceptedEvents();
+		navigate(new ViewEventPage(), eventList);
 	}
 
 	public static TableView<User> createTableView(List<User> guestList) {
@@ -24,19 +40,14 @@ public class GuestController extends Controller {
 		} else {
 			tableView = new TableView<>();
 
-			TableColumn<User, Integer> guestIdColumn = new TableColumn<>("Guest Id");
-			guestIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-			guestIdColumn.prefWidthProperty().bind(tableView.widthProperty().divide(3));
-
 			TableColumn<User, String> guestNameColumn = new TableColumn<>("Guest Name");
 			guestNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-			guestNameColumn.prefWidthProperty().bind(tableView.widthProperty().divide(3));
+			guestNameColumn.prefWidthProperty().bind(tableView.widthProperty().divide(2));
 
 			TableColumn<User, String> guestEmailColumn = new TableColumn<>("Guest Email");
 			guestEmailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-			guestEmailColumn.prefWidthProperty().bind(tableView.widthProperty().divide(3));
+			guestEmailColumn.prefWidthProperty().bind(tableView.widthProperty().divide(2));
 
-			tableView.getColumns().add(guestIdColumn);
 			tableView.getColumns().add(guestNameColumn);
 			tableView.getColumns().add(guestEmailColumn);
 
@@ -46,5 +57,12 @@ public class GuestController extends Controller {
 		}
 
 		return tableView;
+	}
+
+	public static void viewInvitation() {
+		List<Invitation> invitationList = new ArrayList<>();
+		invitationList = Invitation.getInvitationsByEmail(User.getCurrentUser().getEmail());
+
+		navigate(new ViewInvitationPage(), invitationList);
 	}
 }

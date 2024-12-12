@@ -129,6 +129,29 @@ public class Event extends Model {
 		return null;
 	}
 
+	public static List<Event> getAcceptedEvents() {
+		String query = "SELECT e.* FROM Event e JOIN Invitation i ON i.eventId = e.eventId WHERE invitationStatus LIKE 'Accepted' AND userId LIKE '"
+				+ User.getCurrentUser().getId() + "'";
+		List<Event> eventList = new ArrayList<>();
+		try {
+			connect.rs = connect.execQuery(query);
+			while (connect.rs.next()) {
+				String id = connect.rs.getString("EventId");
+				String name = connect.rs.getString("EventName");
+				String date = connect.rs.getString("EventDate");
+				String location = connect.rs.getString("EventLocation");
+				String description = connect.rs.getString("EventDescription");
+				String organizerId = connect.rs.getString("OrganizerId");
+				eventList.add(new Event(id, name, date, location, description, organizerId));
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return eventList;
+	}
+
 	private static String generateNewId() {
 		String query = "SELECT MAX(EventId) AS maxId FROM event";
 		PreparedStatement ps = null;

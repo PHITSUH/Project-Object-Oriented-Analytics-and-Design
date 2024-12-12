@@ -93,6 +93,12 @@ public class EventOrganizerController extends Controller {
 		return Result.ok(null);
 	}
 
+	public static void viewOrganizedEvents() {
+		// fetch shit here
+		List<Event> eventList = Event.getEventByOrganizerId();
+		navigate(new ViewEventPage(), eventList);
+	}
+
 	public static Result<Void, String> createEvent(String name, LocalDate date, String location, String description,
 			String organizerId) {
 		Result<Void, String> check = checkCreateEventInput(name, date, location, description);
@@ -117,12 +123,6 @@ public class EventOrganizerController extends Controller {
 
 	public static void viewAddGuest(Event event) {
 		navigate(new AddGuestPage(), new view.AddGuestPage.Props(event, getGuests()));
-	}
-
-	public static void viewOrganizedEvents() {
-		// fetch shit here
-		List<Event> eventList = Event.getEventByOrganizerId();
-		navigate(new ViewEventPage(), eventList);
 	}
 
 	public static void viewCreateEventPage() {

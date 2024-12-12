@@ -5,15 +5,16 @@ import java.util.ArrayList;
 import model.Admin;
 import model.Event;
 import model.EventOrganizer;
+import model.Invitation;
 import model.User;
 import model.Vendor;
 import util.Result;
 import view.AdminPage;
-import view.GuestPage;
 import view.LoginPage;
 import view.RegisterPage;
 import view.VendorPage;
 import view.ViewEventPage;
+import view.ViewInvitationPage;
 
 public class UserController extends Controller {
 
@@ -47,7 +48,7 @@ public class UserController extends Controller {
 		} else if (u instanceof EventOrganizer) {
 			navigate(new ViewEventPage(), Event.getEventByOrganizerId());
 		} else {
-			navigate(new GuestPage());
+			navigate(new ViewInvitationPage(), Invitation.getInvitationsByEmail(email));
 		}
 
 		return user;

@@ -40,7 +40,10 @@ public class EventDetailsPage extends Page<EventDetailsPage.Props> {
 
 	public void event() {
 		backButton.setOnAction(e -> {
-			EventOrganizerController.viewOrganizedEvents();
+			if (User.getCurrentUser().getRole().equals("Guest"))
+				GuestController.viewOrganizedEvents();
+			else if (User.getCurrentUser().getRole().equals("Event Organizer"))
+				EventOrganizerController.viewOrganizedEvents();
 			return;
 		});
 	}
@@ -68,7 +71,7 @@ public class EventDetailsPage extends Page<EventDetailsPage.Props> {
 		mainBox.setMargin(titleLabel, new Insets(0, 0, 20, 0));
 
 		if (!data.participantList.isEmpty()) {
-			tableBox = new HBox();
+			tableBox = new HBox(20);
 			tableBox.setAlignment(Pos.CENTER);
 			tableBox.setPadding(new Insets(20));
 

@@ -1,6 +1,7 @@
 package view;
 
 import controller.EventOrganizerController;
+import controller.GuestController;
 import controller.UserController;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -37,12 +38,40 @@ public class ComponentFactory {
 			return eventOrganizerNavbar();
 		else if (User.getCurrentUser().getRole().equals("Vendor"))
 			return vendorNavbar();
+		else if (User.getCurrentUser().getRole().equals("Guest"))
+			return guestNavbar();
 		return null;
 	}
 
 	static MenuBar vendorNavbar() {
 
 		return null;
+	}
+
+	static MenuBar guestNavbar() {
+		MenuBar menuBar = new MenuBar();
+		Menu guestMenu = new Menu("Actions");
+		menuBar.getMenus().add(guestMenu);
+
+		MenuItem viewInvitation, viewAcceptedInvitation, logout;
+		viewInvitation = new MenuItem("View Invitation");
+		viewAcceptedInvitation = new MenuItem("View Accepted Invitation");
+		logout = new MenuItem("Logout");
+
+		guestMenu.getItems().addAll(viewInvitation, viewAcceptedInvitation, logout);
+
+		viewInvitation.setOnAction(e -> {
+			GuestController.viewInvitation();
+		});
+
+		viewAcceptedInvitation.setOnAction(e -> {
+			GuestController.viewOrganizedEvents();
+		});
+
+		logout.setOnAction(e -> {
+			UserController.logout();
+		});
+		return menuBar;
 	}
 
 	static MenuBar eventOrganizerNavbar() {

@@ -18,6 +18,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import model.Event;
+import model.User;
 import util.Result;
 
 public class ViewEventPage extends Page<List<Event>> {
@@ -85,7 +86,7 @@ public class ViewEventPage extends Page<List<Event>> {
 	public Pane init() {
 
 		mainPane = new BorderPane();
-		mainPane.setTop(ComponentFactory.eventOrganizerNavbar());
+		mainPane.setTop(ComponentFactory.roleNavbar());
 		viewLabel = new Label("Events");
 		viewLabel.setFont(Font.font("", FontWeight.EXTRA_BOLD, 60));
 		mainBox = new VBox();
@@ -121,7 +122,10 @@ public class ViewEventPage extends Page<List<Event>> {
 		changeEventButton = new Button("Change Event Name");
 		changeEventButton.setPrefWidth(200);
 
-		buttonBox.getChildren().addAll(addVendorButton, addGuestButton, viewDetailButton, changeEventButton);
+		if (User.getCurrentUser().getRole().equals("Event Organizer"))
+			buttonBox.getChildren().addAll(addVendorButton, addGuestButton, viewDetailButton, changeEventButton);
+		else if (User.getCurrentUser().getRole().equals("Guest"))
+			buttonBox.getChildren().add(viewDetailButton);
 
 		mainBox.getChildren().add(buttonBox);
 
