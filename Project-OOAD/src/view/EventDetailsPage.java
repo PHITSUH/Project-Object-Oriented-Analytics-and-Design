@@ -47,7 +47,7 @@ public class EventDetailsPage extends Page<EventDetailsPage.Props> {
 
 	public Pane init() {
 		mainPane = new BorderPane();
-		mainPane.setTop(ComponentFactory.eventOrganizerNavbar());
+		mainPane.setTop(ComponentFactory.roleNavbar());
 
 		mainBox = new VBox(20);
 		mainBox.setAlignment(Pos.CENTER);

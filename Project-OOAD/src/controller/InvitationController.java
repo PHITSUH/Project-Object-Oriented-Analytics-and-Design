@@ -10,7 +10,7 @@ public class InvitationController {
 
 	}
 
-	public static List<Invitation> getInvitation(String email) {
+	public static List<Invitation> getInvitationsByEmail(String email) {
 		// TODO Auto-generated method stub
 		return Invitation.getInvitationsByEmail(email);
 	}

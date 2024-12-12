@@ -118,7 +118,7 @@ public class Invitation extends Model {
 	}
 
 	public static List<Invitation> getInvitationsByEmail(String email) {
-		String query = "SELECT * FROM invitation i JOIN users u ON i.userId = u.userId WHERE userEmail = ?";
+		String query = "SELECT * FROM invitation i JOIN users u ON i.userId = u.userId WHERE userEmail = ? AND invitationStatus NOT LIKE 'Accepted'";
 		PreparedStatement ps = connect.addQuery(query);
 		ArrayList<Invitation> resArr = new ArrayList<>();
 

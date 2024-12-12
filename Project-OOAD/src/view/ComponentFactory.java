@@ -5,6 +5,7 @@ import controller.UserController;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import model.User;
 
 public class ComponentFactory {
 	static MenuBar landingNavbar() {
@@ -29,6 +30,19 @@ public class ComponentFactory {
 	static MenuItem changeProfileMenuItem() {
 		MenuItem changeProfile = new MenuItem("Change Profile");
 		return changeProfile;
+	}
+
+	static MenuBar roleNavbar() {
+		if (User.getCurrentUser().getRole().equals("Event Organizer"))
+			return eventOrganizerNavbar();
+		else if (User.getCurrentUser().getRole().equals("Vendor"))
+			return vendorNavbar();
+		return null;
+	}
+
+	static MenuBar vendorNavbar() {
+
+		return null;
 	}
 
 	static MenuBar eventOrganizerNavbar() {
