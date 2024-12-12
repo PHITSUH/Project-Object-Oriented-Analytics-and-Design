@@ -27,6 +27,11 @@ public class UserController extends Controller {
 		navigate(new RegisterPage());
 	}
 
+	public static void logout() {
+		User.logout();
+		navigate(new LoginPage());
+	}
+
 	public static Result<User, String> login(String email, String password) {
 		// show the correct page for each role
 		Result<User, String> user = User.login(email, password);

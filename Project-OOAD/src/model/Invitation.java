@@ -89,6 +89,7 @@ public class Invitation extends Model {
 		try {
 			ps.setString(1, "Accepted");
 			ps.setString(2, invitationId);
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return null;

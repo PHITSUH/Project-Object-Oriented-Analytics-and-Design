@@ -93,6 +93,10 @@ public abstract class User extends Model {
 		}
 	}
 
+	public static void logout() {
+		currentUser = null;
+	}
+
 	public static Result<User, String> login(String email, String password) {
 		User user = getAllUsers().stream().filter((u) -> u.email.equals(email) && u.password.equals(password))
 				.findFirst().orElse(null);

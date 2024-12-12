@@ -35,10 +35,11 @@ public class ComponentFactory {
 		MenuBar menuBar = new MenuBar();
 		Menu EOMenu = new Menu("Actions");
 		menuBar.getMenus().addAll(EOMenu);
-		MenuItem createEvent, viewEvent;
+		MenuItem createEvent, viewEvent, logout;
 		createEvent = new MenuItem("Create Event");
 		viewEvent = new MenuItem("View Event");
-		EOMenu.getItems().addAll(createEvent, viewEvent);
+		logout = new MenuItem("Logout");
+		EOMenu.getItems().addAll(createEvent, viewEvent, logout);
 
 		createEvent.setOnAction(e -> {
 			EventOrganizerController.viewCreateEventPage();
@@ -46,6 +47,10 @@ public class ComponentFactory {
 
 		viewEvent.setOnAction(e -> {
 			EventOrganizerController.viewOrganizedEvents();
+		});
+
+		logout.setOnAction(e -> {
+			UserController.logout();
 		});
 
 		return menuBar;
