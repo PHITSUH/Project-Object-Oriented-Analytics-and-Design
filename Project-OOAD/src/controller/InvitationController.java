@@ -53,6 +53,8 @@ public class InvitationController extends Controller {
 	public static String acceptInvitation(String InvitationId) {
 		return Invitation.acceptInvitation(InvitationId);
 	}
+	
+	
 
 	public static Result<Void, String> invitationSelected(Invitation invitation) {
 		if (invitation == null)

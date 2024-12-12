@@ -6,14 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import controller.InvitationController;
+import controller.ProductController;
+import util.Result;
 
 public class Vendor extends User {
 
-	private ArrayList<Invitation> acceptedInvitations;
-
+	private List<Invitation> acceptedInvitations; 
+	
 	public Vendor(String id, String email, String name, String password, String role) {
 		super(id, email, name, password, role);
-		acceptedInvitations = (ArrayList<Invitation>) InvitationController.getInvitationsByEmail(email);
+		acceptedInvitations = new ArrayList<>(InvitationController.getInvitationsByEmail(email));
 	}
 
 	public static List<User> getAllVendors() {
@@ -75,6 +77,11 @@ public class Vendor extends User {
 		return null;
 
 	}
+	
+	public List<Invitation> viewAcceptedEvents(){
+		reloadAccepted();
+		return acceptedInvitations;
+	}
 
 	public String acceptInvitation(String InvitationId) {
 		return InvitationController.acceptInvitation(InvitationId);
@@ -83,5 +90,14 @@ public class Vendor extends User {
 	public void reloadAccepted() {
 		acceptedInvitations.clear();
 		acceptedInvitations.addAll(InvitationController.getInvitationsByEmail(this.getEmail()));
+	}
+	
+	private void checkManageVendor(String desc, Product product) {
+		// TODO Auto-generated method stub
+
+	}
+	
+	public static void manageVendor(User user, String name, String desc) {
+		ProductController.addProduct(user, name, desc);
 	}
 }

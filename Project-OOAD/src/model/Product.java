@@ -32,7 +32,7 @@ public class Product extends Model{
 		return productDescription;
 	}
 	
-	public static void manageProduct(User user, String productName, String productDescription) {
+	public static void addProduct(User user, String productName, String productDescription) {
 		String query = "INSERT INTO product (productId, vendorId, productName, productDescription) VALUES (?, ?, ?, ?, ?)";
 		PreparedStatement ps = connect.addQuery(query);
 		String newId = generateNewId();
@@ -46,6 +46,7 @@ public class Product extends Model{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 	}
 	
 	private static String generateNewId() {
