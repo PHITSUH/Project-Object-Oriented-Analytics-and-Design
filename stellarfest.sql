@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 07, 2024 at 04:39 AM
+-- Generation Time: Dec 12, 2024 at 03:58 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -36,6 +36,13 @@ CREATE TABLE `event` (
   `OrganizerId` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `event`
+--
+
+INSERT INTO `event` (`EventId`, `EventName`, `EventDate`, `EventLocation`, `EventDescription`, `OrganizerId`) VALUES
+('00001', 'My Birthday!', '2024-12-31', 'Bina Nusantara', 'Happy Birthday!', '00001');
+
 -- --------------------------------------------------------
 
 --
@@ -50,6 +57,14 @@ CREATE TABLE `invitation` (
   `InvitationRole` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `invitation`
+--
+
+INSERT INTO `invitation` (`InvitationId`, `EventId`, `UserId`, `InvitationStatus`, `InvitationRole`) VALUES
+('00001', '00001', '00002', 'Waiting to be accepted', 'Vendor'),
+('00002', '00001', '00003', 'Waiting to be accepted', 'Guest');
+
 -- --------------------------------------------------------
 
 --
@@ -63,6 +78,16 @@ CREATE TABLE `user` (
   `UserPassword` varchar(255) NOT NULL,
   `UserRole` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user`
+--
+
+INSERT INTO `user` (`UserId`, `UserEmail`, `UserName`, `UserPassword`, `UserRole`) VALUES
+('00001', 'eo@gmail.com', 'eo', 'eo123', 'Event Organizer'),
+('00002', 'vendor@gmail.com', 'vendor', 'vendor123', 'Vendor'),
+('00003', 'guest@gmail.com', 'guest', 'guest123', 'Guest'),
+('00004', 'admin@gmail.com', 'admin', 'admin123', 'Admin');
 
 --
 -- Indexes for dumped tables

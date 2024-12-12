@@ -10,30 +10,50 @@ public class Invitation extends Model {
 
 	private String invitationId;
 
+	private String eventId;
+	private String userId;
+	private String invitationStatus;
+	private String invitationRole;
+
 	public String getInvitationId() {
 		return invitationId;
+	}
+
+	public void setInvitationId(String invitationId) {
+		this.invitationId = invitationId;
 	}
 
 	public String getEventId() {
 		return eventId;
 	}
 
+	public void setEventId(String eventId) {
+		this.eventId = eventId;
+	}
+
 	public String getUserId() {
 		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 	public String getInvitationStatus() {
 		return invitationStatus;
 	}
 
+	public void setInvitationStatus(String invitationStatus) {
+		this.invitationStatus = invitationStatus;
+	}
+
 	public String getInvitationRole() {
 		return invitationRole;
 	}
 
-	private String eventId;
-	private String userId;
-	private String invitationStatus;
-	private String invitationRole;
+	public void setInvitationRole(String invitationRole) {
+		this.invitationRole = invitationRole;
+	}
 
 	public Invitation(String invitationId, String eventId, String userId, String invitationStatus,
 			String invitationRole) {
@@ -67,7 +87,7 @@ public class Invitation extends Model {
 		PreparedStatement ps = connect.addQuery(query);
 
 		try {
-			ps.setString(1, "Invitation Accepted");
+			ps.setString(1, "Accepted");
 			ps.setString(2, invitationId);
 		} catch (SQLException e) {
 			e.printStackTrace();
