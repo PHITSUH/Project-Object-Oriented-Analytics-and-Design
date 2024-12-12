@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.Invitation;
 
-public class InvitationController {
+public class InvitationController extends Controller{
 
 	public InvitationController() {
 

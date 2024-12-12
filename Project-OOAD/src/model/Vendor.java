@@ -13,7 +13,7 @@ public class Vendor extends User {
 	
 	public Vendor(String id, String email, String name, String password, String role) {
 		super(id, email, name, password, role);
-		acceptedInvitations = new ArrayList<>();
+		acceptedInvitations = InvitationController.getInvitation(email);
 	}
 
 	public static List<User> getAllVendors() {
@@ -76,9 +76,12 @@ public class Vendor extends User {
 
 	}
 	
-	
-	
 	public String acceptInvitation(String InvitationId) {
 		return InvitationController.acceptInvitation(InvitationId);
+	}
+	
+	public void reloadAccepted() {
+		acceptedInvitations.clear();
+		acceptedInvitations.addAll(InvitationController.getInvitation(this.getEmail()));
 	}
 }
