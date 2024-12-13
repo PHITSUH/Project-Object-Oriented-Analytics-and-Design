@@ -124,7 +124,7 @@ public class ViewEventPage extends Page<List<Event>> {
 
 		if (User.getCurrentUser().getRole().equals("Event Organizer"))
 			buttonBox.getChildren().addAll(addVendorButton, addGuestButton, viewDetailButton, changeEventButton);
-		else if (User.getCurrentUser().getRole().equals("Guest"))
+		else if (User.getCurrentUser().getRole().equals("Guest") || User.getCurrentUser().getRole().equals("Vendor"))
 			buttonBox.getChildren().add(viewDetailButton);
 
 		mainBox.getChildren().add(buttonBox);

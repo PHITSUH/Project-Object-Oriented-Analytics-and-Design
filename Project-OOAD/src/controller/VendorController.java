@@ -8,10 +8,11 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import model.Product;
+import model.Event;
 import model.User;
 import model.Vendor;
 import util.Result;
+import view.ViewEventPage;
 
 public class VendorController extends Controller {
 
@@ -49,14 +50,20 @@ public class VendorController extends Controller {
 
 		return tableView;
 	}
-	
+
+	public static void viewOrganizedEvents() {
+		// fetch shit here
+		List<Event> eventList = Event.getAcceptedEvents();
+		navigate(new ViewEventPage(), eventList);
+	}
+
 	public static Result<String, String> manageVendor(User user, String name, String desc) {
-		
-		if(name.isEmpty()) {
+
+		if (name.isEmpty()) {
 			return Result.err("Name cannot be empty");
-		}else if(desc.isEmpty()) {
+		} else if (desc.isEmpty()) {
 			return Result.err("Description cannot be empty");
-		}else if(desc.length() > 50) {
+		} else if (desc.length() > 50) {
 			return Result.err("Descroption must not be more than 50 Characters");
 		}
 		Vendor.manageVendor(user, name, desc);

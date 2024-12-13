@@ -44,6 +44,8 @@ public class EventDetailsPage extends Page<EventDetailsPage.Props> {
 				GuestController.viewOrganizedEvents();
 			else if (User.getCurrentUser().getRole().equals("Event Organizer"))
 				EventOrganizerController.viewOrganizedEvents();
+			else if (User.getCurrentUser().getRole().equals("Vendor"))
+				VendorController.viewOrganizedEvents();
 			return;
 		});
 	}
