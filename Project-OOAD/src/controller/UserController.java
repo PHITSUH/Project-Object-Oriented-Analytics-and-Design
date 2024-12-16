@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import model.Admin;
 import model.Event;
@@ -9,10 +10,8 @@ import model.Invitation;
 import model.User;
 import model.Vendor;
 import util.Result;
-import view.AdminPage;
 import view.LoginPage;
 import view.RegisterPage;
-import view.VendorPage;
 import view.ViewEventPage;
 import view.ViewInvitationPage;
 
@@ -42,9 +41,9 @@ public class UserController extends Controller {
 		}
 		User u = user.getValue();
 		if (u instanceof Admin) {
-			navigate(new AdminPage());
+//			navigate(new AdminPage());
 		} else if (u instanceof Vendor) {
-			navigate(new VendorPage());
+			navigate(new ViewInvitationPage(), Invitation.getInvitationsByEmail(email));
 		} else if (u instanceof EventOrganizer) {
 			navigate(new ViewEventPage(), Event.getEventByOrganizerId());
 		} else {
@@ -52,6 +51,13 @@ public class UserController extends Controller {
 		}
 
 		return user;
+	}
+
+	public static void viewInvitation() {
+		List<Invitation> invitationList = new ArrayList<>();
+		invitationList = Invitation.getInvitationsByEmail(User.getCurrentUser().getEmail());
+
+		navigate(new ViewInvitationPage(), invitationList);
 	}
 
 	private static Result<Void, String> checkRegisterInput(String email, String name, String password) {

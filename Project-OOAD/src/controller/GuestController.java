@@ -10,10 +10,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Event;
 import model.Guest;
-import model.Invitation;
 import model.User;
 import view.ViewEventPage;
-import view.ViewInvitationPage;
 
 public class GuestController extends Controller {
 
@@ -59,10 +57,4 @@ public class GuestController extends Controller {
 		return tableView;
 	}
 
-	public static void viewInvitation() {
-		List<Invitation> invitationList = new ArrayList<>();
-		invitationList = Invitation.getInvitationsByEmail(User.getCurrentUser().getEmail());
-
-		navigate(new ViewInvitationPage(), invitationList);
-	}
 }

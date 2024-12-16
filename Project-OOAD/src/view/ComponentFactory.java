@@ -3,6 +3,7 @@ package view;
 import controller.EventOrganizerController;
 import controller.GuestController;
 import controller.UserController;
+import controller.VendorController;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
@@ -44,8 +45,35 @@ public class ComponentFactory {
 	}
 
 	static MenuBar vendorNavbar() {
+		MenuBar menuBar = new MenuBar();
+		Menu vendorMenu = new Menu("Actions");
+		menuBar.getMenus().addAll(vendorMenu);
 
-		return null;
+		MenuItem viewInvitation, viewAcceptedInvitation, manageVendor, logout;
+		viewInvitation = new MenuItem("View Invitation");
+		viewAcceptedInvitation = new MenuItem("View Accepted Invitation");
+		logout = new MenuItem("Logout");
+		manageVendor = new MenuItem("Manage Vendor");
+
+		vendorMenu.getItems().addAll(viewInvitation, viewAcceptedInvitation, manageVendor, logout);
+
+		viewInvitation.setOnAction(e -> {
+			UserController.viewInvitation();
+		});
+
+		viewAcceptedInvitation.setOnAction(e -> {
+			VendorController.viewOrganizedEvents();
+		});
+
+		logout.setOnAction(e -> {
+			UserController.logout();
+		});
+
+		manageVendor.setOnAction(e -> {
+			VendorController.viewManageVendor();
+		});
+
+		return menuBar;
 	}
 
 	static MenuBar guestNavbar() {
@@ -61,7 +89,7 @@ public class ComponentFactory {
 		guestMenu.getItems().addAll(viewInvitation, viewAcceptedInvitation, logout);
 
 		viewInvitation.setOnAction(e -> {
-			GuestController.viewInvitation();
+			UserController.viewInvitation();
 		});
 
 		viewAcceptedInvitation.setOnAction(e -> {

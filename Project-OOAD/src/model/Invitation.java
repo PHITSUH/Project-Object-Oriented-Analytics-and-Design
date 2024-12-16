@@ -92,7 +92,7 @@ public class Invitation extends Model {
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
-			return null;
+			return "test";
 		}
 		return "Invitation Accepted";
 	}

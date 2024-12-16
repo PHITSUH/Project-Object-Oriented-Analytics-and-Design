@@ -2,8 +2,8 @@ package view;
 
 import java.util.List;
 
-import controller.GuestController;
 import controller.InvitationController;
+import controller.UserController;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
@@ -31,6 +31,7 @@ public class ViewInvitationPage extends Page<List<Invitation>> {
 
 	public void event() {
 		acceptInvitationButton.setOnAction(e -> {
+			System.out.println("test");
 			Invitation selectedInvitation = tableView.getSelectionModel().getSelectedItem();
 			Result<Void, String> result = InvitationController.invitationSelected(selectedInvitation);
 			if (result.isErr()) {
@@ -42,7 +43,7 @@ public class ViewInvitationPage extends Page<List<Invitation>> {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setContentText(Invitation.acceptInvitation(selectedInvitation.getInvitationId()));
 			alert.show();
-			GuestController.viewInvitation();
+			UserController.viewInvitation();
 		});
 	}
 
@@ -69,8 +70,6 @@ public class ViewInvitationPage extends Page<List<Invitation>> {
 			tableView = InvitationController.createTableView(data);
 			mainBox.getChildren().addAll(titleLabel, tableView, buttonBox);
 		}
-
-		acceptInvitationButton = new Button("Accept Invitation");
 
 		mainBox.setPadding(new Insets(10));
 

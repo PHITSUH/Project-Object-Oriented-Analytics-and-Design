@@ -57,6 +57,12 @@ public class ViewEventPage extends Page<List<Event>> {
 		});
 
 		viewDetailButton.setOnAction(e -> {
+			if (tableView == null) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText("You don't have any accepted events yet");
+				alert.show();
+				return;
+			}
 			Event selectedEvent = tableView.getSelectionModel().getSelectedItem();
 			Result<Void, String> result = EventOrganizerController.eventSelected(selectedEvent);
 			if (result.isErr()) {

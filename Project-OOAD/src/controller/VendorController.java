@@ -9,9 +9,12 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import model.Event;
+import model.Product;
 import model.User;
 import model.Vendor;
 import util.Result;
+import view.AddProductPage;
+import view.ManageVendorPage;
 import view.ViewEventPage;
 
 public class VendorController extends Controller {
@@ -57,8 +60,15 @@ public class VendorController extends Controller {
 		navigate(new ViewEventPage(), eventList);
 	}
 
-	public static Result<String, String> manageVendor(User user, String name, String desc) {
+	public static void viewAddProduct() {
+		popup(new AddProductPage());
+	}
 
+	public static void manageVendor(String name, String desc) {
+
+	}
+
+	public static Result<String, String> checkManageVendorInput(String name, String desc) {
 		if (name.isEmpty()) {
 			return Result.err("Name cannot be empty");
 		} else if (desc.isEmpty()) {
@@ -66,7 +76,10 @@ public class VendorController extends Controller {
 		} else if (desc.length() > 50) {
 			return Result.err("Descroption must not be more than 50 Characters");
 		}
-		Vendor.manageVendor(user, name, desc);
 		return Result.ok("Product Successfully Added");
+	}
+
+	public static void viewManageVendor() {
+		navigate(new ManageVendorPage(), Product.getVendorProduct(User.getCurrentUser().getId()));
 	}
 }

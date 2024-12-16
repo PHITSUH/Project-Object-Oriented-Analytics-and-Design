@@ -7,12 +7,11 @@ import java.util.List;
 
 import controller.InvitationController;
 import controller.ProductController;
-import util.Result;
 
 public class Vendor extends User {
 
-	private List<Invitation> acceptedInvitations; 
-	
+	private List<Invitation> acceptedInvitations;
+
 	public Vendor(String id, String email, String name, String password, String role) {
 		super(id, email, name, password, role);
 		acceptedInvitations = new ArrayList<>(InvitationController.getInvitationsByEmail(email));
@@ -39,17 +38,20 @@ public class Vendor extends User {
 	}
 
 	public static List<User> getVendorsByTransactionID(String eventID) {
-		String query = "SELECT UserId FROM Invitation WHERE EventId LIKE ? AND InvitationRole "
-				+ "LIKE 'Vendor' AND InvitationStatus LIKE 'Accepted'";
-		PreparedStatement ps = connect.addQuery(query);
+		String query = "SELECT User.* FROM Invitation JOIN User ON Invitation.UserId = User.UserId WHERE EventId LIKE '"
+				+ eventID + "' AND InvitationRole LIKE 'Vendor' AND InvitationStatus LIKE 'Accepted'";
 
 		List<User> vendorList = new ArrayList<>();
 		try {
-			ps.setString(1, eventID);
-			connect.rs = ps.executeQuery();
+			connect.rs = connect.execQuery(query);
 			while (connect.rs.next()) {
 				String userId = connect.rs.getString("userId");
-				vendorList.add(getVendorById(userId));
+				String email = connect.rs.getString("UserEmail");
+				String name = connect.rs.getString("UserName");
+				String pass = connect.rs.getString("UserPassword");
+				String role = connect.rs.getString("UserPassword");
+
+				vendorList.add(new Vendor(userId, email, name, pass, role));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -64,6 +66,7 @@ public class Vendor extends User {
 		PreparedStatement ps = connect.addQuery(query);
 
 		try {
+			ps.setString(1, id);
 			connect.rs = ps.executeQuery();
 			String email = connect.rs.getString("UserEmail");
 			String name = connect.rs.getString("UserName");
@@ -77,8 +80,8 @@ public class Vendor extends User {
 		return null;
 
 	}
-	
-	public List<Invitation> viewAcceptedEvents(){
+
+	public List<Invitation> viewAcceptedEvents() {
 		reloadAccepted();
 		return acceptedInvitations;
 	}
@@ -91,12 +94,12 @@ public class Vendor extends User {
 		acceptedInvitations.clear();
 		acceptedInvitations.addAll(InvitationController.getInvitationsByEmail(this.getEmail()));
 	}
-	
+
 	private void checkManageVendor(String desc, Product product) {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	public static void manageVendor(User user, String name, String desc) {
 		ProductController.addProduct(user, name, desc);
 	}
