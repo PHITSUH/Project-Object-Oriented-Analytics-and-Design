@@ -144,6 +144,32 @@ public class Invitation extends Model {
 		return resArr;
 	}
 
+	public static List<Invitation> getInvitationByEventId(String eventId) {
+		String query = "SELECT * FROM invitation WHERE EventId LIKE ?";
+		PreparedStatement ps = connect.addQuery(query);
+		ArrayList<Invitation> resArr = new ArrayList<>();
+
+		try {
+			ps.setString(1, eventId);
+			ResultSet rs = ps.executeQuery();
+
+			while (rs.next()) {
+				String invitationId = rs.getString("invitationId");
+				String userId = rs.getString("userId");
+				String invitationStatus = rs.getString("invitationStatus");
+				String invitationRole = rs.getString("invitationRole");
+
+				Invitation inv = new Invitation(invitationId, eventId, userId, invitationStatus, invitationRole);
+
+				resArr.add(inv);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+		return resArr;
+	}
+
 	private static String generateNewId() {
 		String query = "SELECT MAX(invitationId) AS maxId FROM Invitation";
 		PreparedStatement ps = null;

@@ -1,5 +1,6 @@
 package view;
 
+import controller.AdminController;
 import controller.EventOrganizerController;
 import controller.GuestController;
 import controller.UserController;
@@ -41,7 +42,36 @@ public class ComponentFactory {
 			return vendorNavbar();
 		else if (User.getCurrentUser().getRole().equals("Guest"))
 			return guestNavbar();
-		return null;
+		else
+			return adminNavbar();
+	}
+
+	static MenuBar adminNavbar() {
+		MenuBar menuBar = new MenuBar();
+		Menu adminMenu = new Menu("Actions");
+		menuBar.getMenus().add(adminMenu);
+
+		MenuItem viewEvent, viewUser, logout;
+
+		viewEvent = new MenuItem("View All Events");
+		viewUser = new MenuItem("View All Users");
+		logout = new MenuItem("Logout");
+
+		adminMenu.getItems().addAll(viewEvent, viewUser, logout);
+
+		viewEvent.setOnAction(e -> {
+			AdminController.viewAllEvents();
+		});
+
+		viewUser.setOnAction(e -> {
+			AdminController.viewAllUsers();
+		});
+
+		logout.setOnAction(e -> {
+			UserController.logout();
+		});
+
+		return menuBar;
 	}
 
 	static MenuBar vendorNavbar() {

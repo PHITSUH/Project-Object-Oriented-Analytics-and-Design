@@ -1,7 +1,9 @@
 package view;
 
 import java.util.List;
+import java.util.Optional;
 
+import controller.AdminController;
 import controller.EventController;
 import controller.EventOrganizerController;
 import javafx.geometry.Insets;
@@ -9,6 +11,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.BorderPane;
@@ -28,7 +31,7 @@ public class ViewEventPage extends Page<List<Event>> {
 	private Label viewLabel, emptyTableLabel;
 	private VBox mainBox;
 	private HBox buttonBox;
-	private Button addVendorButton, addGuestButton, viewDetailButton, changeEventButton;
+	private Button addVendorButton, addGuestButton, viewDetailButton, changeEventButton, deleteEventButton;
 
 	public void event() {
 		addVendorButton.setOnAction(e -> {
@@ -87,6 +90,26 @@ public class ViewEventPage extends Page<List<Event>> {
 
 			EventOrganizerController.viewChangeEventPage(selectedEvent);
 		});
+
+		deleteEventButton.setOnAction(e -> {
+			Event selectedEvent = tableView.getSelectionModel().getSelectedItem();
+			Result<Void, String> result = EventOrganizerController.eventSelected(selectedEvent);
+			if (result.isErr()) {
+				Alert alert = new Alert(AlertType.ERROR);
+				alert.setContentText(result.getError());
+				alert.show();
+				return;
+			}
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setContentText("Are you sure you want to delete?");
+			Optional<ButtonType> check = alert.showAndWait();
+
+			if (check.isPresent()) {
+				if (check.get() == ButtonType.OK)
+					AdminController.deleteEvent(selectedEvent.getId());
+			}
+			AdminController.viewAllEvents();
+		});
 	}
 
 	public Pane init() {
@@ -128,10 +151,15 @@ public class ViewEventPage extends Page<List<Event>> {
 		changeEventButton = new Button("Change Event Name");
 		changeEventButton.setPrefWidth(200);
 
+		deleteEventButton = new Button("Delete Event");
+		deleteEventButton.setPrefWidth(200);
+
 		if (User.getCurrentUser().getRole().equals("Event Organizer"))
 			buttonBox.getChildren().addAll(addVendorButton, addGuestButton, viewDetailButton, changeEventButton);
-		else if (User.getCurrentUser().getRole().equals("Guest") || User.getCurrentUser().getRole().equals("Vendor"))
-			buttonBox.getChildren().add(viewDetailButton);
+		else if (User.getCurrentUser().getRole().equals("Admin"))
+			buttonBox.getChildren().addAll(viewDetailButton, deleteEventButton);
+		else
+			buttonBox.getChildren().addAll(viewDetailButton);
 
 		mainBox.getChildren().add(buttonBox);
 

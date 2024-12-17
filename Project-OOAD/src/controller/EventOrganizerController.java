@@ -95,7 +95,7 @@ public class EventOrganizerController extends Controller {
 
 	public static void viewOrganizedEvents() {
 		// fetch shit here
-		List<Event> eventList = Event.getEventByOrganizerId();
+		List<Event> eventList = Event.getEventByOrganizerId(User.getCurrentUser().getId());
 		navigate(new ViewEventPage(), eventList);
 	}
 

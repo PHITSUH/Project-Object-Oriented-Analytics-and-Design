@@ -1,9 +1,6 @@
 package model;
 
-import util.Connect;
-
 public class EventOrganizer extends User {
-	private static Connect connect = Connect.getInstance();
 
 	public EventOrganizer(String id, String email, String username, String password, String role) {
 		super(id, email, username, password, role);
@@ -22,11 +19,11 @@ public class EventOrganizer extends User {
 	}
 
 	public static void getGuestsByTransactionId(String eventId) {
-
+		Guest.getGuestsByTransactionID(eventId);
 	}
 
 	public static void getVendorsByTransactionId(String eventId) {
-
+		Vendor.getVendorsByTransactionID(eventId);
 	}
 
 	public static void checkCreateEventInput(String name, String date, String location, String description) {
@@ -46,11 +43,11 @@ public class EventOrganizer extends User {
 	}
 
 	public static void GetVendors() {
-
+		Vendor.getAllVendors();
 	}
 
 	public static void getGuests() {
-
+		Guest.getAllGuests();
 	}
 
 }

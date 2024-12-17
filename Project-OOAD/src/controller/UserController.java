@@ -41,11 +41,11 @@ public class UserController extends Controller {
 		}
 		User u = user.getValue();
 		if (u instanceof Admin) {
-//			navigate(new AdminPage());
+			navigate(new ViewEventPage(), Admin.getAllEvents());
 		} else if (u instanceof Vendor) {
 			navigate(new ViewInvitationPage(), Invitation.getInvitationsByEmail(email));
 		} else if (u instanceof EventOrganizer) {
-			navigate(new ViewEventPage(), Event.getEventByOrganizerId());
+			navigate(new ViewEventPage(), Event.getEventByOrganizerId(User.getCurrentUser().getId()));
 		} else {
 			navigate(new ViewInvitationPage(), Invitation.getInvitationsByEmail(email));
 		}

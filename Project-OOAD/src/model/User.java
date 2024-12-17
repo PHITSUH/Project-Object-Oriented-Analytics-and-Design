@@ -23,7 +23,7 @@ public abstract class User extends Model {
 	public static final String ADMIN_ROLE = "Admin";
 	public static final String EVENT_ORGANIZER_ROLE = "Event Organizer";
 
-	protected User(String id, String email, String name, String password, String role) {
+	public User(String id, String email, String name, String password, String role) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -32,11 +32,75 @@ public abstract class User extends Model {
 		this.role = role;
 	}
 
+	public static void deleteUser(String userId) {
+		Optional<User> user = getUserById(userId);
+		user.ifPresent(e -> {
+			if (e.role.equals("Event Organizer")) {
+				List<Event> eventList = Event.getEventByOrganizerId(userId);
+				if (!eventList.isEmpty()) {
+					for (int i = 0; i < eventList.size(); i++) {
+						List<Invitation> invitationList = Invitation.getInvitationByEventId(eventList.get(i).getId());
+						if (!invitationList.isEmpty()) {
+							for (int j = 0; j < invitationList.size(); j++) {
+								String query = "DELETE FROM invitation WHERE InvitationId LIKE ?";
+								PreparedStatement ps = connect.addQuery(query);
+								try {
+									ps.setString(1, invitationList.get(j).getInvitationId());
+									ps.executeUpdate();
+								} catch (SQLException er) {
+									// TODO Auto-generated catch block
+									er.printStackTrace();
+								}
+							}
+						}
+						String query = "DELETE FROM event WHERE EventId LIKE ?";
+						PreparedStatement ps = connect.addQuery(query);
+						try {
+							ps.setString(1, eventList.get(i).getId());
+							ps.executeUpdate();
+						} catch (SQLException er) {
+							// TODO Auto-generated catch block
+							er.printStackTrace();
+						}
+					}
+				}
+			} else {
+				List<Invitation> invitationList = Invitation.getInvitationsByEmail(e.email);
+				if (!invitationList.isEmpty()) {
+					for (int j = 0; j < invitationList.size(); j++) {
+						String query = "DELETE FROM invitation WHERE InvitationId LIKE ?";
+						PreparedStatement ps = connect.addQuery(query);
+						try {
+							ps.setString(1, invitationList.get(j).getInvitationId());
+							ps.executeUpdate();
+						} catch (SQLException er) {
+							// TODO Auto-generated catch block
+							er.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		String query = "DELETE FROM user WHERE UserId LIKE ?";
+		PreparedStatement ps = connect.addQuery(query);
+		try {
+			ps.setString(1, userId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public static User getCurrentUser() {
 		return currentUser;
 	}
 
-	protected static List<User> getAllUsers() {
+	public static Optional<User> getUserById(String userId) {
+		return getAllUsers().stream().filter((user) -> user.id.equals(userId)).findFirst();
+	}
+
+	public static List<User> getAllUsers() {
 		ArrayList<User> userList = new ArrayList<>();
 		String query = "SELECT * FROM user";
 		connect.rs = connect.execQuery(query);

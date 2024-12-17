@@ -2,6 +2,7 @@ package view;
 
 import java.util.List;
 
+import controller.AdminController;
 import controller.EventOrganizerController;
 import controller.GuestController;
 import controller.VendorController;
@@ -46,6 +47,8 @@ public class EventDetailsPage extends Page<EventDetailsPage.Props> {
 				EventOrganizerController.viewOrganizedEvents();
 			else if (User.getCurrentUser().getRole().equals("Vendor"))
 				VendorController.viewOrganizedEvents();
+			else
+				AdminController.viewAllEvents();
 			return;
 		});
 	}

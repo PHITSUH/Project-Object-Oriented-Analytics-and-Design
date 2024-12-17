@@ -21,6 +21,32 @@ public class Event extends Model {
 		this.organizerId = organizerId;
 	}
 
+	public static void deleteEvent(String eventId) {
+		List<Invitation> invitationList = Invitation.getInvitationByEventId(eventId);
+		if (!invitationList.isEmpty()) {
+			for (int j = 0; j < invitationList.size(); j++) {
+				String query = "DELETE FROM invitation WHERE InvitationId LIKE ?";
+				PreparedStatement ps = connect.addQuery(query);
+				try {
+					ps.setString(1, invitationList.get(j).getInvitationId());
+					ps.executeUpdate();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		String query = "DELETE FROM event WHERE EventId LIKE ?";
+		PreparedStatement ps = connect.addQuery(query);
+		try {
+			ps.setString(1, eventId);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
 	public static Event createEvent(String name, String date, String location, String description, String organizerId) {
 		String query = "INSERT INTO event (EventId, EventName, EventDate, EventLocation, EventDescription, OrganizerId) VALUES (?, ?, ?, ?, ?, ?)";
 		PreparedStatement ps = connect.addQuery(query);
@@ -55,11 +81,11 @@ public class Event extends Model {
 		}
 	}
 
-	public static List<Event> getEventByOrganizerId() {
+	public static List<Event> getEventByOrganizerId(String userId) {
 		String query = "SELECT * FROM event WHERE OrganizerId LIKE ?";
 		PreparedStatement ps = connect.addQuery(query);
 		try {
-			ps.setString(1, User.getCurrentUser().getId());
+			ps.setString(1, userId);
 			connect.rs = ps.executeQuery();
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
