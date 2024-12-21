@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Product extends Model {
 
-	String productId, vendorId, name, description;
+	private String productId, vendorId, name, description;
 
 	public Product(String productId, String vendorId, String productName, String productDescription) {
 		super();
@@ -81,7 +81,6 @@ public class Product extends Model {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				// Retrieve max ID and increment it
 				String maxIdStr = rs.getString("maxId");
 				if (maxIdStr != null) {
 					maxId = Integer.parseInt(maxIdStr);
@@ -91,7 +90,6 @@ public class Product extends Model {
 			e.printStackTrace();
 		}
 
-		// Increment and format the new ID
 		maxId += 1;
 		return String.format("%05d", maxId);
 	}

@@ -32,12 +32,12 @@ public class EventDetailsPage extends Page<EventDetailsPage.Props> {
 		}
 	}
 
-	BorderPane mainPane;
-	VBox mainBox;
-	Label titleLabel, nameLabel, dateLabel, locationLabel, descLabel;
-	TableView<User> vendorView, guestView;
-	Button backButton;
-	HBox tableBox;
+	private BorderPane mainPane;
+	private VBox mainBox;
+	private Label titleLabel, nameLabel, dateLabel, locationLabel, descLabel;
+	private TableView<User> vendorView, guestView;
+	private Button backButton;
+	private HBox tableBox;
 
 	public void event() {
 		backButton.setOnAction(e -> {
@@ -73,7 +73,7 @@ public class EventDetailsPage extends Page<EventDetailsPage.Props> {
 		descLabel = new Label("Desc Label: " + data.event.getDescription());
 
 		mainBox.getChildren().addAll(titleLabel, nameLabel, dateLabel, locationLabel, descLabel);
-		mainBox.setMargin(titleLabel, new Insets(0, 0, 20, 0));
+		VBox.setMargin(titleLabel, new Insets(0, 0, 20, 0));
 
 		if (!data.participantList.isEmpty()) {
 			tableBox = new HBox(20);

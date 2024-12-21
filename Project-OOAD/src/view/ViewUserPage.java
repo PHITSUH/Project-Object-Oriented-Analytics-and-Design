@@ -22,11 +22,11 @@ import util.Result;
 
 public class ViewUserPage extends Page<List<User>> {
 
-	BorderPane mainPane;
-	VBox mainBox;
-	Label titleLabel;
-	TableView<User> tableView;
-	Button deleteButton;
+	private BorderPane mainPane;
+	private VBox mainBox;
+	private Label titleLabel;
+	private TableView<User> tableView;
+	private Button deleteButton;
 
 	public void event() {
 		deleteButton.setOnAction(e -> {

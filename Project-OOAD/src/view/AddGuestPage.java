@@ -23,6 +23,9 @@ import model.User;
 import util.Result;
 
 public class AddGuestPage extends Page<view.AddGuestPage.Props> {
+	// dengan pakai props bisa minta data untuk di kirim saat navigation
+	// ini berarti logika fetch data gaperlu di view
+	// view hanya deklarasi kumpulan data yang diperlukan
 	public static class Props {
 		protected Event event;
 		protected List<User> guestList;
@@ -34,12 +37,12 @@ public class AddGuestPage extends Page<view.AddGuestPage.Props> {
 		}
 	}
 
-	BorderPane mainPane;
-	VBox mainBox;
-	Label addGuestLabel, eventLabel;
-	TableView<User> guestView;
-	Button backButton, submitButton, addVendorButton;
-	HBox buttonBox;
+	private BorderPane mainPane;
+	private VBox mainBox;
+	private Label addGuestLabel, eventLabel;
+	private TableView<User> guestView;
+	private Button backButton, submitButton, addVendorButton;
+	private HBox buttonBox;
 
 	public void event() {
 		backButton.setOnAction(e -> {

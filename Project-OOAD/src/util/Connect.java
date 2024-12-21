@@ -39,6 +39,8 @@ public class Connect {
 		}
 	}
 
+	// prepared statement lebih aman dibanding pake String.format
+	// menghindari SQL injection
 	public PreparedStatement addQuery(String query) {
 		PreparedStatement ps = null;
 		try {
@@ -50,6 +52,7 @@ public class Connect {
 		return ps;
 	}
 
+	// khusus untuk SELECT queries
 	public ResultSet execQuery(String query) {
 		try {
 			rs = st.executeQuery(query);

@@ -20,13 +20,13 @@ import util.Result;
 
 public class AddProductPage extends Page<Void> {
 
-	BorderPane mainPane;
-	VBox mainBox;
-	Label titleLabel, nameLabel, descLabel;
-	TextField nameField;
-	TextArea descArea;
-	Button submitButton;
-	HBox nameBox, descBox;
+	private BorderPane mainPane;
+	private VBox mainBox;
+	private Label titleLabel, nameLabel, descLabel;
+	private TextField nameField;
+	private TextArea descArea;
+	private Button submitButton;
+	private HBox nameBox, descBox;
 
 	public void event() {
 		submitButton.setOnAction(e -> {

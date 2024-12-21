@@ -5,11 +5,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+// base class untuk view
+// setiap page bisa meminta props tersendiri
+// untuk data yang perlu diisi/diperlukan view
 public abstract class Page<T> {
 	protected Pane root;
 	protected T data;
 	protected Stage popupStage;
 
+	// wajib implement ini setiap page
 	abstract Pane initRoot();
 
 	public void show(Scene scene) {
@@ -21,6 +25,7 @@ public abstract class Page<T> {
 		popupStage.close();
 	}
 
+	// to display the page as a popup, we need a different stage
 	public void popup() {
 		this.root = initRoot();
 		popupStage = new Stage();

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Guest extends User {
-	List<Event> eventAccepted;
+	private List<Event> eventAccepted;
 
 	public Guest(String id, String email, String name, String password, String role) {
 		super(id, email, name, password, role);
@@ -52,6 +52,14 @@ public class Guest extends User {
 		}
 
 		return guestList;
+	}
+
+	public List<Event> getEventAccepted() {
+		return eventAccepted;
+	}
+
+	public void setEventAccepted(List<Event> eventAccepted) {
+		this.eventAccepted = eventAccepted;
 	}
 
 }

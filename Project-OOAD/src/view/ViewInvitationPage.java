@@ -22,12 +22,12 @@ import util.Result;
 
 public class ViewInvitationPage extends Page<List<Invitation>> {
 
-	BorderPane mainPane;
-	VBox mainBox;
-	Label titleLabel;
-	TableView<Invitation> tableView;
-	HBox buttonBox;
-	Button acceptInvitationButton;
+	private BorderPane mainPane;
+	private VBox mainBox;
+	private Label titleLabel;
+	private TableView<Invitation> tableView;
+	private HBox buttonBox;
+	private Button acceptInvitationButton;
 
 	public void event() {
 		acceptInvitationButton.setOnAction(e -> {

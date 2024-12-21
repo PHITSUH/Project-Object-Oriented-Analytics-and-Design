@@ -183,7 +183,6 @@ public class Event extends Model {
 		PreparedStatement ps = null;
 		int maxId = 0;
 
-		// take the biggest ID
 		try {
 			ps = connect.addQuery(query);
 			ResultSet rs = ps.executeQuery();
@@ -198,7 +197,6 @@ public class Event extends Model {
 			e.printStackTrace();
 		}
 
-		// increment and format the new ID
 		maxId += 1;
 		return String.format("%05d", maxId);
 	}

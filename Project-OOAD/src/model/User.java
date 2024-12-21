@@ -32,9 +32,14 @@ public abstract class User extends Model {
 		this.role = role;
 	}
 
+	// kita memastikan saat user di delete, row yang berhubungan dengan data user
+	// itu dihapus juga untuk menghindari adanya data yang tidak valid lagi
 	public static void deleteUser(String userId) {
 		Optional<User> user = getUserById(userId);
+
 		user.ifPresent(e -> {
+			// kalau dia event organizer, kita hapus event yang dibikin oleh user itu
+			// kalau organizernya aja udah gaada, eventnya pasti gabisa lanjut
 			if (e.role.equals("Event Organizer")) {
 				List<Event> eventList = Event.getEventByOrganizerId(userId);
 				if (!eventList.isEmpty()) {
@@ -64,7 +69,10 @@ public abstract class User extends Model {
 						}
 					}
 				}
+
 			} else {
+				// kalau user bukan event organizer, kita hapus semua inivitation yang diterima
+				// agar user tidak dianggap sebagai participant lagi
 				List<Invitation> invitationList = Invitation.getInvitationsByEmail(e.email);
 				if (!invitationList.isEmpty()) {
 					for (int j = 0; j < invitationList.size(); j++) {
@@ -81,6 +89,7 @@ public abstract class User extends Model {
 				}
 			}
 		});
+
 		String query = "DELETE FROM user WHERE UserId LIKE ?";
 		PreparedStatement ps = connect.addQuery(query);
 		try {

@@ -1,6 +1,7 @@
 package util;
 
 // class custom buat handle errors dengan jelas dan konsisten
+// inspired dari error systemnya rust
 public class Result<T, E> {
 	private final T value; // success value
 	private final E error; // error value

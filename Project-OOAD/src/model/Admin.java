@@ -9,7 +9,7 @@ public class Admin extends User {
 	}
 
 	public void viewAllEvents() {
-
+		// sudah di implement di AdminController
 	}
 
 	public static List<User> getAllUsers() {

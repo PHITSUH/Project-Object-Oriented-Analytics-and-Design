@@ -21,11 +21,13 @@ import view.ViewUserPage;
 
 public class AdminController extends Controller {
 	public static void getAllEvents() {
-
+		// sudah diimplement di Admin, kurang masuk akal untuk punya kode yang sama
+		// berulang
 	}
 
 	public static void getAllUsers() {
-
+		// sudah diimplement di Admin, kurang masuk akal untuk punya kode yang sama
+		// berulang
 	}
 
 	public static void getGuestsByTransactionID(String eventId) {

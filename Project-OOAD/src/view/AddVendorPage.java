@@ -22,7 +22,7 @@ import model.Invitation;
 import model.User;
 import util.Result;
 
-public class AddVendorPage extends Page<view.AddVendorPage.Props> {
+public class AddVendorPage extends Page<AddVendorPage.Props> {
 	public static class Props {
 		protected Event event;
 		protected List<User> vendorList;
@@ -34,12 +34,12 @@ public class AddVendorPage extends Page<view.AddVendorPage.Props> {
 		}
 	}
 
-	BorderPane mainPane;
-	Label addVendorLabel, eventLabel, emptyLabel;
-	Button submitButton, addGuestButton, backButton;
-	HBox buttonBox;
-	VBox mainBox;
-	TableView<User> tableView;
+	private BorderPane mainPane;
+	private Label addVendorLabel, eventLabel, emptyLabel;
+	private Button submitButton, addGuestButton, backButton;
+	private HBox buttonBox;
+	private VBox mainBox;
+	private TableView<User> tableView;
 
 	public void event() {
 		submitButton.setOnAction(e -> {

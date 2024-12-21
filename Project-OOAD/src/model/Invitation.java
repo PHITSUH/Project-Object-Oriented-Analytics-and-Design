@@ -180,7 +180,6 @@ public class Invitation extends Model {
 			ResultSet rs = ps.executeQuery();
 
 			if (rs.next()) {
-				// Retrieve max ID and increment it
 				String maxIdStr = rs.getString("maxId");
 				if (maxIdStr != null) {
 					maxId = Integer.parseInt(maxIdStr);
@@ -190,7 +189,6 @@ public class Invitation extends Model {
 			e.printStackTrace();
 		}
 
-		// Increment and format the new ID
 		maxId += 1;
 		return String.format("%05d", maxId);
 	}

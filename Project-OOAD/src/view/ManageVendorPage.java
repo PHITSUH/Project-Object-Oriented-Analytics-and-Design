@@ -18,11 +18,11 @@ import model.Product;
 
 public class ManageVendorPage extends Page<List<Product>> {
 
-	BorderPane mainPane;
-	VBox mainBox;
-	TableView<Product> tableView;
-	Label titleLabel;
-	Button addProductButton;
+	private BorderPane mainPane;
+	private VBox mainBox;
+	private TableView<Product> tableView;
+	private Label titleLabel;
+	private Button addProductButton;
 
 	public void event() {
 		addProductButton.setOnAction(e -> {
@@ -52,7 +52,7 @@ public class ManageVendorPage extends Page<List<Product>> {
 		addProductButton = new Button("Add Product");
 		mainBox.getChildren().add(addProductButton);
 
-		mainBox.setMargin(addProductButton, new Insets(15, 0, 0, 0));
+		VBox.setMargin(addProductButton, new Insets(15, 0, 0, 0));
 
 		mainPane.setCenter(mainBox);
 		event();

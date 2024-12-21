@@ -19,12 +19,12 @@ import util.Result;
 
 public class ChangeEventPage extends Page<Event> {
 
-	BorderPane mainPane;
-	VBox mainBox;
-	HBox textBox;
-	Label nameLabel, titleLabel;
-	TextField nameField;
-	Button submitButton;
+	private BorderPane mainPane;
+	private VBox mainBox;
+	private HBox textBox;
+	private Label nameLabel, titleLabel;
+	private TextField nameField;
+	private Button submitButton;
 
 	public void event() {
 		submitButton.setOnAction(e -> {
@@ -64,7 +64,7 @@ public class ChangeEventPage extends Page<Event> {
 		nameField.setPrefWidth(250);
 
 		textBox.getChildren().addAll(nameLabel, nameField);
-		textBox.setMargin(nameLabel, new Insets(0, 20, 0, 0));
+		HBox.setMargin(nameLabel, new Insets(0, 20, 0, 0));
 
 		submitButton = new Button("Change Event Name");
 		submitButton.setPrefWidth(200);

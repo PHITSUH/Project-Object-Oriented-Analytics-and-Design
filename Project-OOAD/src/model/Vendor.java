@@ -96,7 +96,6 @@ public class Vendor extends User {
 	}
 
 	private void checkManageVendor(String desc, Product product) {
-		// TODO Auto-generated method stub
 
 	}
 

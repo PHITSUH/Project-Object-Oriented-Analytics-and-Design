@@ -10,8 +10,11 @@ import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
 import model.User;
 
+// class yang bisa membuat component yang sering dipakai
+// berulang-ulang kali
 public class ComponentFactory {
-	static MenuBar landingNavbar() {
+
+	public static MenuBar landingNavbar() {
 		MenuBar menuBar = new MenuBar();
 		Menu loginMenu = new Menu("Actions");
 		menuBar.getMenus().addAll(loginMenu);
@@ -30,12 +33,12 @@ public class ComponentFactory {
 		return menuBar;
 	}
 
-	static MenuItem changeProfileMenuItem() {
+	public static MenuItem changeProfileMenuItem() {
 		MenuItem changeProfile = new MenuItem("Change Profile");
 		return changeProfile;
 	}
 
-	static MenuBar roleNavbar() {
+	public static MenuBar roleNavbar() {
 		if (User.getCurrentUser().getRole().equals("Event Organizer"))
 			return eventOrganizerNavbar();
 		else if (User.getCurrentUser().getRole().equals("Vendor"))
@@ -46,7 +49,7 @@ public class ComponentFactory {
 			return adminNavbar();
 	}
 
-	static MenuBar adminNavbar() {
+	public static MenuBar adminNavbar() {
 		MenuBar menuBar = new MenuBar();
 		Menu adminMenu = new Menu("Actions");
 		menuBar.getMenus().add(adminMenu);
@@ -74,7 +77,7 @@ public class ComponentFactory {
 		return menuBar;
 	}
 
-	static MenuBar vendorNavbar() {
+	public static MenuBar vendorNavbar() {
 		MenuBar menuBar = new MenuBar();
 		Menu vendorMenu = new Menu("Actions");
 		menuBar.getMenus().addAll(vendorMenu);
@@ -106,7 +109,7 @@ public class ComponentFactory {
 		return menuBar;
 	}
 
-	static MenuBar guestNavbar() {
+	public static MenuBar guestNavbar() {
 		MenuBar menuBar = new MenuBar();
 		Menu guestMenu = new Menu("Actions");
 		menuBar.getMenus().add(guestMenu);
@@ -132,7 +135,7 @@ public class ComponentFactory {
 		return menuBar;
 	}
 
-	static MenuBar eventOrganizerNavbar() {
+	public static MenuBar eventOrganizerNavbar() {
 		MenuBar menuBar = new MenuBar();
 		Menu EOMenu = new Menu("Actions");
 		menuBar.getMenus().addAll(EOMenu);
